@@ -11,7 +11,9 @@ from app.schemas.avaliacao import (
     AvaliacaoPedidoBase,
     AvaliacaoPedidoCreate,
     AvaliacaoPedidoResponse,
+    AvaliacaoResponse,
 )
+from app.schemas.produto_metricas import AvaliacoesProdutoResponse, VendasProdutoResponse
 
 __all__ = [
     "ProdutoBase",
@@ -30,4 +32,7 @@ __all__ = [
     "AvaliacaoPedidoBase",
     "AvaliacaoPedidoCreate",
     "AvaliacaoPedidoResponse",
+    "AvaliacaoResponse",
+    "AvaliacoesProdutoResponse",
+    "VendasProdutoResponse",
 ]

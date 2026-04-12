@@ -21,3 +21,7 @@ class AvaliacaoPedidoResponse(AvaliacaoPedidoBase):
     id_avaliacao: str
 
     model_config = ConfigDict(from_attributes=True)
+
+
+class AvaliacaoResponse(AvaliacaoPedidoResponse):
+    pass
