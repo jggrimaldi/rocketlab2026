@@ -1,6 +1,6 @@
 from fastapi import FastAPI
 
-from app.routers import produtos_router, vendedores_router
+from app.routers import consumidores_router, produtos_router, vendedores_router
 
 app = FastAPI(
     title="Sistema de Compras Online",
@@ -9,6 +9,7 @@ app = FastAPI(
 )
 
 app.include_router(produtos_router)
+app.include_router(consumidores_router)
 app.include_router(vendedores_router)
 
 

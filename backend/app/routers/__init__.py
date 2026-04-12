@@ -1,4 +1,5 @@
 from app.routers.produtos import router as produtos_router
+from app.routers.consumidores import router as consumidores_router
 from app.routers.vendedores import router as vendedores_router
 
-__all__ = ["produtos_router", "vendedores_router"]
+__all__ = ["produtos_router", "consumidores_router", "vendedores_router"]
