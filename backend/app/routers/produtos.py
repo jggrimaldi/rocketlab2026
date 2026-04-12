@@ -50,3 +50,12 @@ def atualizar_produto(
     db.commit()
     db.refresh(produto)
     return produto
+
+
+@router.delete("/{id_produto}", status_code=204)
+def deletar_produto(id_produto: str, db: Session = Depends(get_db)):
+    produto = db.query(Produto).filter(Produto.id_produto == id_produto).first()
+    if not produto:
+        raise HTTPException(status_code=404, detail="Produto não encontrado")
+    db.delete(produto)
+    db.commit()
