@@ -1,4 +1,9 @@
-from app.schemas.produto import ProdutoBase, ProdutoCreate, ProdutoResponse
+from app.schemas.produto import (
+    ProdutoBase,
+    ProdutoCreate,
+    ProdutoResponse,
+    ProdutoUpdate,
+)
 from app.schemas.vendedor import VendedorBase, VendedorCreate, VendedorResponse
 from app.schemas.consumidor import ConsumidorBase, ConsumidorCreate, ConsumidorResponse
 from app.schemas.pedido import PedidoBase, PedidoCreate, PedidoResponse
@@ -11,6 +16,7 @@ from app.schemas.avaliacao import (
 __all__ = [
     "ProdutoBase",
     "ProdutoCreate",
+    "ProdutoUpdate",
     "ProdutoResponse",
     "VendedorBase",
     "VendedorCreate",
