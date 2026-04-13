@@ -1,4 +1,7 @@
-from typing import List
+import csv
+from functools import lru_cache
+from pathlib import Path
+from typing import Dict, List
 from uuid import uuid4
 
 from fastapi import APIRouter, Depends, HTTPException
@@ -19,9 +22,47 @@ from app.schemas.produto_metricas import (
 router = APIRouter(prefix="/produtos", tags=["Produtos"])
 
 
+@lru_cache(maxsize=1)
+def _carregar_imagens_categoria() -> Dict[str, str]:
+    arquivo = (
+        Path(__file__).resolve().parents[1]
+        / "seeds"
+        / "data"
+        / "dim_categoria_imagens.csv"
+    )
+
+    if not arquivo.exists():
+        return {}
+
+    imagens: Dict[str, str] = {}
+    with arquivo.open("r", encoding="utf-8") as csvfile:
+        reader = csv.DictReader(csvfile)
+        for row in reader:
+            categoria = (row.get("Categoria") or "").strip()
+            link = (row.get("Link") or "").strip()
+            if categoria and link:
+                imagens[categoria] = link
+    return imagens
+
+
 @router.get("/", response_model=List[ProdutoResponse])
 def listar_produtos(db: Session = Depends(get_db)):
     return db.query(Produto).all()
+
+
+@router.get("/categorias/imagens", response_model=Dict[str, str])
+def listar_imagens_categorias():
+    return _carregar_imagens_categoria()
+
+
+@router.get("/precos", response_model=Dict[str, float])
+def listar_precos_produtos(db: Session = Depends(get_db)):
+    precos = (
+        db.query(ItemPedido.id_produto, func.avg(ItemPedido.preco_BRL))
+        .group_by(ItemPedido.id_produto)
+        .all()
+    )
+    return {id_produto: float(preco or 0) for id_produto, preco in precos}
 
 
 @router.get("/{id_produto}", response_model=ProdutoResponse)
