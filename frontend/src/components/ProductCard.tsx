@@ -22,7 +22,7 @@ export function ProductCard({ produto, imageUrl, onSelect }: ProductCardProps) {
   return (
     <button
       onClick={() => onSelect(produto)}
-      className="theme-surface group flex h-full w-full max-w-full min-w-0 flex-col overflow-hidden rounded-2xl border text-left shadow-lg shadow-black/20 transition hover:-translate-y-1 hover:border-[color:var(--primary)]/50"
+      className="theme-surface group flex h-full w-full max-w-full min-w-0 flex-col overflow-hidden rounded-2xl border text-left shadow-lg shadow-black/20 transition hover:-translate-y-1 hover:border-(--primary)/50"
       type="button"
     >
       <div className="theme-surface-muted relative h-28 w-full overflow-hidden sm:h-40 lg:h-52">
@@ -45,10 +45,10 @@ export function ProductCard({ produto, imageUrl, onSelect }: ProductCardProps) {
       </div>
       <div className="flex flex-1 flex-col gap-2.5 p-3 sm:gap-4 sm:p-5">
         <div>
-          <h3 className="theme-text-primary line-clamp-2 break-words text-sm font-semibold sm:text-lg">
+          <h3 className="theme-text-primary line-clamp-2 wrap-break-word text-sm font-semibold sm:text-lg">
             {produto.nome_produto}
           </h3>
-          <p className="theme-text-muted mt-1 line-clamp-2 break-words text-[11px] sm:text-sm">{produto.categoria_produto}</p>
+          <p className="theme-text-muted mt-1 line-clamp-2 wrap-break-word text-[11px] sm:text-sm">{produto.categoria_produto}</p>
           <p className="theme-text-accent mt-2 text-xs font-semibold sm:mt-3 sm:text-base">
             {formattedPrice}
           </p>
@@ -56,7 +56,7 @@ export function ProductCard({ produto, imageUrl, onSelect }: ProductCardProps) {
         <div className="theme-text-primary space-y-1.5 text-[11px] sm:space-y-2 sm:text-sm">
           <div className="flex min-w-0 items-center justify-between gap-3">
             <span className="theme-text-muted text-[10px] uppercase tracking-[0.2em] sm:text-xs sm:tracking-[0.3em]">Vendedor</span>
-            <span className="max-w-[6rem] truncate text-right sm:max-w-[11rem]">{produto.nome_vendedor}</span>
+            <span className="max-w-24 truncate text-right sm:max-w-44">{produto.nome_vendedor}</span>
           </div>
           <div className="flex min-w-0 items-center justify-between gap-3">
             <span className="theme-text-muted text-[10px] uppercase tracking-[0.2em] sm:text-xs sm:tracking-[0.3em]">Avaliacao</span>

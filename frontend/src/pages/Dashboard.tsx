@@ -67,7 +67,7 @@ function MetricCard({
   return (
     <div className={`theme-surface rounded-3xl border p-5 shadow-lg shadow-black/10 ${className ?? ""}`}>
       <p className="theme-text-muted text-xs uppercase tracking-[0.3em]">{label}</p>
-      <p className="theme-text-primary mt-3 break-words text-2xl font-semibold sm:text-3xl">{value}</p>
+      <p className="theme-text-primary mt-3 wrap-break-word text-2xl font-semibold sm:text-3xl">{value}</p>
       {helper ? <p className="theme-text-muted mt-2 text-sm">{helper}</p> : null}
     </div>
   )
@@ -240,7 +240,7 @@ export function Dashboard() {
                 </div>
                 <div className="theme-surface-muted h-3 overflow-hidden rounded-full border">
                   <div
-                    className="h-full rounded-full bg-gradient-to-r from-[color:var(--primary)] to-[color:var(--positive)]"
+                    className="h-full rounded-full bg-linear-to-r from-(--primary) to-(--positive)"
                     style={{ width: `${(categoria.total_produtos / maxCategoriaProdutos) * 100}%` }}
                   />
                 </div>
@@ -262,7 +262,7 @@ export function Dashboard() {
                 </div>
                 <div className="theme-surface-muted h-2 overflow-hidden rounded-full border">
                   <div
-                    className="h-full rounded-full bg-gradient-to-r from-[color:var(--primary)] to-[color:var(--positive)]"
+                    className="h-full rounded-full bg-linear-to-r from-(--primary) to-(--positive)"
                     style={{ width: `${(item.receita_total / maxReceitaMensal) * 100}%` }}
                   />
                 </div>

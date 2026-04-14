@@ -81,12 +81,12 @@ export default function ProductDetail({
   return (
     <div className="space-y-8 sm:space-y-10">
       <section className="grid gap-6 lg:grid-cols-[1.05fr_1.2fr] lg:gap-8">
-        <div className="theme-surface flex min-h-[220px] items-center justify-center overflow-hidden rounded-3xl border sm:min-h-[280px]">
+        <div className="theme-surface flex min-h-55 items-center justify-center overflow-hidden rounded-3xl border sm:min-h-70">
           {imageUrl ? (
             <img
               src={imageUrl}
               alt={produto.nome_produto}
-              className="h-full min-h-[220px] w-full object-cover sm:min-h-[280px]"
+              className="h-full min-h-55 w-full object-cover sm:min-h-70"
               loading="lazy"
               decoding="async"
             />
@@ -102,7 +102,7 @@ export default function ProductDetail({
             <span className="theme-bg-accent-soft theme-text-accent rounded-full px-3 py-1 text-xs font-semibold uppercase tracking-[0.3em]">
               {categoria.replaceAll("_", " ")}
             </span>
-            <span className="rounded-full bg-[color:var(--positive)]/12 px-3 py-1 text-xs font-semibold uppercase tracking-[0.3em] text-[color:var(--positive)]">
+            <span className="rounded-full bg-(--positive)/12 px-3 py-1 text-xs font-semibold uppercase tracking-[0.3em] text-(--positive)">
               Em estoque
             </span>
           </div>
@@ -111,7 +111,7 @@ export default function ProductDetail({
             <p className="theme-text-muted break-all text-xs uppercase tracking-[0.25em] sm:text-sm sm:tracking-[0.35em]">
               {produto.id_produto}
             </p>
-            <h2 className="theme-text-primary mt-3 break-words text-2xl font-semibold sm:text-3xl">
+            <h2 className="theme-text-primary mt-3 wrap-break-word text-2xl font-semibold sm:text-3xl">
               {produto.nome_produto || "—"}
             </h2>
             <p className="theme-text-accent mt-2 text-xl font-semibold sm:text-2xl">
