@@ -1,5 +1,8 @@
+from pathlib import Path
+
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.staticfiles import StaticFiles
 
 from app.routers import (
     consumidores_router,
@@ -26,10 +29,14 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
+uploads_dir = Path(__file__).resolve().parents[1] / "uploads"
+uploads_dir.mkdir(parents=True, exist_ok=True)
+
 app.include_router(produtos_router)
 app.include_router(consumidores_router)
 app.include_router(dashboard_router)
 app.include_router(vendedores_router)
+app.mount("/uploads", StaticFiles(directory=uploads_dir), name="uploads")
 
 
 @app.get("/", tags=["Health"])

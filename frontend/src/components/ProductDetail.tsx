@@ -79,14 +79,14 @@ export default function ProductDetail({
     .toUpperCase()
 
   return (
-    <div className="space-y-10">
-      <section className="grid gap-8 lg:grid-cols-[1.05fr_1.2fr]">
-        <div className="flex min-h-[280px] items-center justify-center overflow-hidden rounded-3xl border border-[#1f1f24] bg-[#141417] text-slate-400">
+    <div className="space-y-8 sm:space-y-10">
+      <section className="grid gap-6 lg:grid-cols-[1.05fr_1.2fr] lg:gap-8">
+        <div className="flex min-h-[220px] items-center justify-center overflow-hidden rounded-3xl border border-[#1f1f24] bg-[#141417] text-slate-400 sm:min-h-[280px]">
           {imageUrl ? (
             <img
               src={imageUrl}
               alt={produto.nome_produto}
-              className="h-full min-h-[280px] w-full object-cover"
+              className="h-full min-h-[220px] w-full object-cover sm:min-h-[280px]"
               loading="lazy"
               decoding="async"
             />
@@ -97,7 +97,7 @@ export default function ProductDetail({
           )}
         </div>
 
-        <div className="space-y-6">
+        <div className="space-y-5 sm:space-y-6">
           <div className="flex flex-wrap items-center gap-2">
             <span className="rounded-full bg-[#1a1a1f] px-3 py-1 text-xs font-semibold uppercase tracking-[0.3em] text-[#e8c547]">
               {categoria.replaceAll("_", " ")}
@@ -108,18 +108,18 @@ export default function ProductDetail({
           </div>
 
           <div>
-            <p className="text-sm uppercase tracking-[0.35em] text-slate-500">
+            <p className="break-all text-xs uppercase tracking-[0.25em] text-slate-500 sm:text-sm sm:tracking-[0.35em]">
               {produto.id_produto}
             </p>
-            <h2 className="mt-3 text-3xl font-semibold text-slate-50">
+            <h2 className="mt-3 break-words text-2xl font-semibold text-slate-50 sm:text-3xl">
               {produto.nome_produto || "—"}
             </h2>
-            <p className="mt-2 text-2xl font-semibold text-[#e8c547]">
+            <p className="mt-2 text-xl font-semibold text-[#e8c547] sm:text-2xl">
               {currency.format(averagePrice)}
             </p>
           </div>
 
-          <div className="grid gap-3 sm:grid-cols-3">
+          <div className="grid grid-cols-1 gap-3 sm:grid-cols-3">
             <div className="rounded-2xl border border-[#1f1f24] bg-[#141417] p-4">
               <p className="text-xs uppercase tracking-[0.3em] text-slate-500">Vendas</p>
               <p className="mt-2 text-xl font-semibold text-slate-50">
@@ -141,7 +141,7 @@ export default function ProductDetail({
             </div>
           </div>
 
-          <div className="grid gap-3 sm:grid-cols-2">
+          <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
             <div className="rounded-2xl border border-[#1f1f24] bg-[#141417] p-4">
               <p className="text-xs uppercase tracking-[0.3em] text-slate-500">Peso</p>
               <p className="mt-2 text-base font-semibold text-slate-50">
@@ -168,16 +168,16 @@ export default function ProductDetail({
             </div>
           </div>
 
-          <div className="flex flex-wrap gap-3">
+          <div className="flex flex-col gap-3 sm:flex-row sm:flex-wrap">
             <button
-              className="rounded-full border border-[#1f1f24] bg-[#141417] px-4 py-2 text-sm font-semibold text-slate-200 shadow-sm transition hover:border-[#2a2a31]"
+              className="w-full rounded-full border border-[#1f1f24] bg-[#141417] px-4 py-2 text-sm font-semibold text-slate-200 shadow-sm transition hover:border-[#2a2a31] sm:w-auto"
               onClick={onEdit}
               type="button"
             >
               Editar
             </button>
             <button
-              className="rounded-full border border-red-400/40 bg-red-500/10 px-4 py-2 text-sm font-semibold text-red-300 shadow-sm transition hover:border-red-400/60"
+              className="w-full rounded-full border border-red-400/40 bg-red-500/10 px-4 py-2 text-sm font-semibold text-red-300 shadow-sm transition hover:border-red-400/60 sm:w-auto"
               onClick={onDelete}
               type="button"
             >
@@ -188,9 +188,9 @@ export default function ProductDetail({
       </section>
 
       <section className="space-y-6">
-        <div className="flex items-center justify-between">
-          <h3 className="text-xl font-semibold text-slate-50">Ultimas avaliacoes</h3>
-          <span className="rounded-full bg-[#141417] px-3 py-1 text-xs uppercase tracking-[0.3em] text-slate-500">
+        <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+          <h3 className="text-lg font-semibold text-slate-50 sm:text-xl">Ultimas avaliacoes</h3>
+          <span className="w-fit rounded-full bg-[#141417] px-3 py-1 text-xs uppercase tracking-[0.3em] text-slate-500">
             {avaliacoes.total_avaliacoes} registros
           </span>
         </div>
@@ -200,7 +200,7 @@ export default function ProductDetail({
             Nenhuma avaliacao ainda
           </div>
         ) : (
-          <div className="grid gap-4 md:grid-cols-3">
+          <div className="grid grid-cols-1 gap-4 md:grid-cols-3">
             {avaliacoes.avaliacoes.slice(0, 3).map((avaliacao) => (
               <div
                 key={avaliacao.id_avaliacao}

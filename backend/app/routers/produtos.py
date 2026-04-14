@@ -1,11 +1,12 @@
 import csv
+import shutil
 from functools import lru_cache
 from math import ceil
 from pathlib import Path
 from typing import Dict
 from uuid import uuid4
 
-from fastapi import APIRouter, Depends, HTTPException, Query
+from fastapi import APIRouter, Depends, File, HTTPException, Query, UploadFile
 from sqlalchemy import func
 from sqlalchemy.orm import Session
 
@@ -29,6 +30,8 @@ from app.schemas.produto_metricas import (
 )
 
 router = APIRouter(prefix="/produtos", tags=["Produtos"])
+UPLOADS_DIR = Path(__file__).resolve().parents[2] / "uploads" / "products"
+UPLOADS_DIR.mkdir(parents=True, exist_ok=True)
 
 
 def _listar_produtos_otimizado(
@@ -82,6 +85,7 @@ def _listar_produtos_otimizado(
             Produto.id_produto,
             Produto.nome_produto,
             Produto.categoria_produto,
+            Produto.imagem_url,
             func.coalesce(precos_subquery.c.preco, Produto.preco, 0).label("preco"),
             func.coalesce(vendedores_subquery.c.nome_vendedor, "—").label("nome_vendedor"),
             func.coalesce(avaliacoes_subquery.c.avaliacao_media, 0).label("avaliacao_media"),
@@ -114,6 +118,7 @@ def _listar_produtos_otimizado(
             id_produto=produto.id_produto,
             nome_produto=produto.nome_produto,
             categoria_produto=produto.categoria_produto,
+            imagem_url=produto.imagem_url,
             preco=float(produto.preco or 0),
             nome_vendedor=produto.nome_vendedor,
             avaliacao_media=float(produto.avaliacao_media or 0),
@@ -343,6 +348,21 @@ def listar_categorias_produtos(
     )
 
     return [categoria for (categoria,) in categorias if categoria]
+
+
+@router.post("/upload-imagem")
+def upload_imagem_produto(file: UploadFile = File(...)):
+    if not file.content_type or not file.content_type.startswith("image/"):
+        raise HTTPException(status_code=400, detail="Arquivo deve ser uma imagem")
+
+    suffix = Path(file.filename or "").suffix or ".jpg"
+    filename = f"{uuid4().hex}{suffix}"
+    destination = UPLOADS_DIR / filename
+
+    with destination.open("wb") as buffer:
+        shutil.copyfileobj(file.file, buffer)
+
+    return {"image_url": f"/uploads/products/{filename}"}
 
 
 @router.get("/precos", response_model=Dict[str, float])

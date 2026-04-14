@@ -57,15 +57,17 @@ function MetricCard({
   label,
   value,
   helper,
+  className,
 }: {
   label: string
   value: string
   helper?: string
+  className?: string
 }) {
   return (
-    <div className="rounded-3xl border border-[#1f1f24] bg-[#141417] p-5 shadow-lg shadow-black/20">
+    <div className={`rounded-3xl border border-[#1f1f24] bg-[#141417] p-5 shadow-lg shadow-black/20 ${className ?? ""}`}>
       <p className="text-xs uppercase tracking-[0.3em] text-slate-500">{label}</p>
-      <p className="mt-3 text-3xl font-semibold text-slate-50">{value}</p>
+      <p className="mt-3 break-words text-2xl font-semibold text-slate-50 sm:text-3xl">{value}</p>
       {helper ? <p className="mt-2 text-sm text-slate-400">{helper}</p> : null}
     </div>
   )
@@ -135,7 +137,7 @@ export function Dashboard() {
 
   if (isLoading || (!state.resumo && !error)) {
     return (
-      <section className="mx-auto w-full max-w-6xl space-y-6 px-4 pb-16 sm:px-6">
+      <section className="mx-auto w-full max-w-6xl space-y-6 px-4 pb-16 pt-6 sm:px-6">
         <div className="rounded-3xl border border-slate-800/70 bg-slate-900/40 p-8 text-slate-200">
           Carregando dashboard...
         </div>
@@ -145,7 +147,7 @@ export function Dashboard() {
 
   if (error || !state.resumo) {
     return (
-      <section className="mx-auto w-full max-w-6xl space-y-6 px-4 pb-16 sm:px-6">
+      <section className="mx-auto w-full max-w-6xl space-y-6 px-4 pb-16 pt-6 sm:px-6">
         <div className="rounded-3xl border border-red-500/40 bg-red-500/10 p-8 text-red-200">
           {error || "Erro ao carregar dashboard"}
         </div>
@@ -163,12 +165,16 @@ export function Dashboard() {
   )
 
   return (
-    <section className="mx-auto w-full max-w-6xl space-y-8 px-4 pb-16 sm:px-6">
+    <section className="mx-auto w-full max-w-6xl space-y-8 px-4 pb-16 pt-6 sm:px-6">
       <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-5">
         <MetricCard label="Produtos" value={state.resumo.total_produtos.toLocaleString("pt-BR")} />
         <MetricCard label="Consumidores" value={state.resumo.total_consumidores.toLocaleString("pt-BR")} />
         <MetricCard label="Pedidos" value={state.resumo.total_pedidos.toLocaleString("pt-BR")} />
-        <MetricCard label="Receita Total" value={currency.format(state.resumo.receita_total)} />
+        <MetricCard
+          label="Receita Total"
+          value={currency.format(state.resumo.receita_total)}
+          className="sm:col-span-2 xl:col-span-1"
+        />
         <MetricCard
           label="Avaliacao Media"
           value={state.resumo.avaliacao_media_geral.toFixed(2)}

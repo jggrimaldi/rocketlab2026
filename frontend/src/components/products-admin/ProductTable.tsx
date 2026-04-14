@@ -33,8 +33,12 @@ export function ProductTable({
   }
 
   return (
-    <div className="overflow-x-auto rounded-3xl border border-[#1f1f24] bg-[#141417]">
-      <table className="min-w-full border-collapse text-left">
+    <div className="space-y-3">
+      <div className="px-1 text-xs uppercase tracking-[0.2em] text-slate-500 sm:hidden">
+        Arraste a tabela para o lado para ver mais colunas e acoes.
+      </div>
+      <div className="overflow-x-auto rounded-3xl border border-[#1f1f24] bg-[#141417] [-webkit-overflow-scrolling:touch]">
+        <table className="min-w-[760px] border-collapse text-left sm:min-w-full">
         <thead className="bg-[#0f0f12] text-xs uppercase tracking-[0.3em] text-slate-500">
           <tr>
             <th className="px-4 py-4">Nome do produto</th>
@@ -57,7 +61,8 @@ export function ProductTable({
             />
           ))}
         </tbody>
-      </table>
+        </table>
+      </div>
     </div>
   )
 }

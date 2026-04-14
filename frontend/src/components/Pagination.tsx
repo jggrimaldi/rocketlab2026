@@ -24,9 +24,9 @@ export function Pagination({
   const pages = Array.from({ length: end - start + 1 }, (_, index) => start + index)
 
   return (
-    <div className="mt-10 flex flex-wrap items-center justify-center gap-2">
+    <div className="mt-10 flex flex-wrap items-center justify-center gap-2 px-1">
       <button
-        className="rounded-full border border-[#1f1f24] bg-[#141417] px-4 py-2 text-xs uppercase tracking-[0.3em] text-slate-200 disabled:cursor-not-allowed disabled:opacity-40"
+        className="rounded-full border border-[#1f1f24] bg-[#141417] px-3 py-2 text-[10px] uppercase tracking-[0.2em] text-slate-200 disabled:cursor-not-allowed disabled:opacity-40 sm:px-4 sm:text-xs sm:tracking-[0.3em]"
         onClick={() => onPageChange(Math.max(1, clampedCurrent - 1))}
         disabled={clampedCurrent === 1}
         type="button"
@@ -48,7 +48,7 @@ export function Pagination({
         </button>
       ))}
       <button
-        className="rounded-full border border-[#1f1f24] bg-[#141417] px-4 py-2 text-xs uppercase tracking-[0.3em] text-slate-200 disabled:cursor-not-allowed disabled:opacity-40"
+        className="rounded-full border border-[#1f1f24] bg-[#141417] px-3 py-2 text-[10px] uppercase tracking-[0.2em] text-slate-200 disabled:cursor-not-allowed disabled:opacity-40 sm:px-4 sm:text-xs sm:tracking-[0.3em]"
         onClick={() => onPageChange(Math.min(totalPages, clampedCurrent + 1))}
         disabled={clampedCurrent === totalPages}
         type="button"

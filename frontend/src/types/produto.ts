@@ -2,6 +2,7 @@ export type Produto = {
   id_produto: string
   nome_produto: string
   categoria_produto: string
+  imagem_url: string | null
   preco: number | null
   peso_produto_gramas: number | null
   comprimento_centimetros: number | null
@@ -13,6 +14,7 @@ export type ProdutoListItem = {
   id_produto: string
   nome_produto: string
   categoria_produto: string
+  imagem_url: string | null
   preco: number
   nome_vendedor: string
   avaliacao_media: number

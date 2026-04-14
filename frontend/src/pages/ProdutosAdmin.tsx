@@ -41,11 +41,16 @@ type ProdutoDetalhesState = {
 type ProdutoFormState = {
   nome_produto: string;
   categoria_produto: string;
+  imagem_url: string;
   preco: string;
   peso_produto_gramas: string;
   comprimento_centimetros: string;
   altura_centimetros: string;
   largura_centimetros: string;
+};
+
+type UploadImagemResponse = {
+  image_url: string;
 };
 
 const ITEMS_PER_PAGE = 6;
@@ -112,6 +117,7 @@ function buildFormState(produto: Produto, preco: number): ProdutoFormState {
   return {
     nome_produto: produto.nome_produto,
     categoria_produto: produto.categoria_produto,
+    imagem_url: produto.imagem_url ?? "",
     preco: formatNumberInput(preco),
     peso_produto_gramas: formatNumberInput(produto.peso_produto_gramas),
     comprimento_centimetros: formatNumberInput(produto.comprimento_centimetros),
@@ -124,6 +130,7 @@ function buildEmptyFormState(): ProdutoFormState {
   return {
     nome_produto: "",
     categoria_produto: "",
+    imagem_url: "",
     preco: "0",
     peso_produto_gramas: "",
     comprimento_centimetros: "",
@@ -199,6 +206,8 @@ export function ProdutosAdmin() {
   const [createError, setCreateError] = useState<string | undefined>();
   const [categorySuggestions, setCategorySuggestions] = useState<string[]>([]);
   const [categoryImages, setCategoryImages] = useState<Record<string, string>>({});
+  const [imageUploading, setImageUploading] = useState<"create" | "edit" | null>(null);
+  const [imageUploadError, setImageUploadError] = useState<string | undefined>();
   const [pagination, setPagination] = useState<{
     total: number;
     pages: number;
@@ -417,6 +426,29 @@ export function ProdutosAdmin() {
     setCreateForm((current) => ({ ...current, [field]: value }));
   };
 
+  const handleImageUpload = async (file: File, target: "create" | "edit") => {
+    const formData = new FormData();
+    formData.append("file", file);
+
+    setImageUploading(target);
+    setImageUploadError(undefined);
+
+    try {
+      const response = await api.post<UploadImagemResponse>("/produtos/upload-imagem", formData);
+
+      if (target === "create") {
+        setCreateForm((current) => ({ ...current, imagem_url: response.image_url }));
+      } else {
+        setEditForm((current) => (current ? { ...current, imagem_url: response.image_url } : current));
+      }
+    } catch (err) {
+      const message = err instanceof Error ? err.message : "Erro ao enviar imagem";
+      setImageUploadError(message);
+    } finally {
+      setImageUploading(null);
+    }
+  };
+
   const handleOpenCreate = () => {
     setIsCreateOpen(true);
     setCreateError(undefined);
@@ -432,6 +464,7 @@ export function ProdutosAdmin() {
       await api.post("/produtos", {
         nome_produto: createForm.nome_produto.trim(),
         categoria_produto: createForm.categoria_produto.trim(),
+        imagem_url: createForm.imagem_url.trim() || null,
         preco: parseOptionalNumber(createForm.preco),
         peso_produto_gramas: parseOptionalNumber(createForm.peso_produto_gramas),
         comprimento_centimetros: parseOptionalNumber(createForm.comprimento_centimetros),
@@ -465,6 +498,7 @@ export function ProdutosAdmin() {
       await api.patch(`/produtos/${editingProductId}`, {
         nome_produto: editForm.nome_produto.trim(),
         categoria_produto: editForm.categoria_produto.trim(),
+        imagem_url: editForm.imagem_url.trim() || null,
         preco: parseOptionalNumber(editForm.preco),
         peso_produto_gramas: parseOptionalNumber(editForm.peso_produto_gramas),
         comprimento_centimetros: parseOptionalNumber(editForm.comprimento_centimetros),
@@ -510,8 +544,8 @@ export function ProdutosAdmin() {
   };
 
   return (
-    <section className="mx-auto w-full max-w-6xl space-y-8 px-4 pb-16 sm:px-6">
-      <PageHeader title="Produtos" onAdd={handleOpenCreate} />
+    <section className="mx-auto w-full max-w-6xl space-y-8 px-4 pb-16 pt-6 sm:px-6">
+      <PageHeader title="" onAdd={handleOpenCreate} />
 
       {/* Barra de filtros */}
       <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
@@ -601,7 +635,7 @@ export function ProdutosAdmin() {
               produto={detailState.produto}
               vendas={detailState.vendas}
               avaliacoes={detailState.avaliacoes}
-              imageUrl={categoryImages[detailState.produto.categoria_produto]}
+              imageUrl={detailState.produto.imagem_url ?? categoryImages[detailState.produto.categoria_produto]}
               onEdit={handleDetailEdit}
               onDelete={() => {
                 void handleDetailDelete();
@@ -649,6 +683,28 @@ export function ProdutosAdmin() {
                     onChange={(event) => handleEditFieldChange("categoria_produto", event.target.value)}
                     required
                   />
+                </label>
+
+                <label className="space-y-2 text-sm text-slate-300 md:col-span-2">
+                  <span>Imagem do produto</span>
+                  <input
+                    className="w-full rounded-xl border border-slate-700 bg-slate-950 px-4 py-3 text-slate-100 file:mr-4 file:rounded-full file:border-0 file:bg-[#e8c547] file:px-4 file:py-2 file:text-sm file:font-semibold file:text-[#0d0d0f]"
+                    type="file"
+                    accept="image/*"
+                    onChange={(event) => {
+                      const file = event.target.files?.[0];
+                      if (file) {
+                        void handleImageUpload(file, "edit");
+                      }
+                    }}
+                  />
+                  {editForm.imagem_url ? (
+                    <img
+                      src={editForm.imagem_url}
+                      alt="Preview do produto"
+                      className="h-32 w-32 rounded-2xl object-cover"
+                    />
+                  ) : null}
                 </label>
 
                 <label className="space-y-2 text-sm text-slate-300">
@@ -705,6 +761,18 @@ export function ProdutosAdmin() {
               {editError ? (
                 <div className="rounded-2xl border border-red-500/40 bg-red-500/10 p-4 text-sm text-red-200">
                   {editError}
+                </div>
+              ) : null}
+
+              {imageUploadError && imageUploading === "edit" ? (
+                <div className="rounded-2xl border border-red-500/40 bg-red-500/10 p-4 text-sm text-red-200">
+                  {imageUploadError}
+                </div>
+              ) : null}
+
+              {imageUploading === "edit" ? (
+                <div className="rounded-2xl border border-slate-700 bg-slate-900/40 p-4 text-sm text-slate-300">
+                  Enviando imagem...
                 </div>
               ) : null}
 
@@ -781,6 +849,28 @@ export function ProdutosAdmin() {
               </label>
 
               <label className="space-y-2 text-sm text-slate-300 md:col-span-2">
+                <span>Imagem do produto</span>
+                <input
+                  className="w-full rounded-xl border border-slate-700 bg-slate-950 px-4 py-3 text-slate-100 file:mr-4 file:rounded-full file:border-0 file:bg-[#e8c547] file:px-4 file:py-2 file:text-sm file:font-semibold file:text-[#0d0d0f]"
+                  type="file"
+                  accept="image/*"
+                  onChange={(event) => {
+                    const file = event.target.files?.[0];
+                    if (file) {
+                      void handleImageUpload(file, "create");
+                    }
+                  }}
+                />
+                {createForm.imagem_url ? (
+                  <img
+                    src={createForm.imagem_url}
+                    alt="Preview do produto"
+                    className="h-32 w-32 rounded-2xl object-cover"
+                  />
+                ) : null}
+              </label>
+
+              <label className="space-y-2 text-sm text-slate-300 md:col-span-2">
                 <span>Preço inicial</span>
                 <input
                   className="w-full rounded-xl border border-slate-700 bg-slate-950 px-4 py-3 text-slate-100"
@@ -835,6 +925,18 @@ export function ProdutosAdmin() {
             {createError ? (
               <div className="rounded-2xl border border-red-500/40 bg-red-500/10 p-4 text-sm text-red-200">
                 {createError}
+              </div>
+            ) : null}
+
+            {imageUploadError && imageUploading === "create" ? (
+              <div className="rounded-2xl border border-red-500/40 bg-red-500/10 p-4 text-sm text-red-200">
+                {imageUploadError}
+              </div>
+            ) : null}
+
+            {imageUploading === "create" ? (
+              <div className="rounded-2xl border border-slate-700 bg-slate-900/40 p-4 text-sm text-slate-300">
+                Enviando imagem...
               </div>
             ) : null}
 

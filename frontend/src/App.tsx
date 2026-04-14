@@ -22,10 +22,10 @@ function AppContent() {
   return (
     <div className="flex min-h-screen bg-[#0d0d0f] text-slate-100">
       <Sidebar />
-      <main className="flex-1 pt-14 lg:pt-0">
+      <main className="min-w-0 flex-1 pt-14 lg:pt-0">
         <div className="relative overflow-hidden">
           <div className="absolute inset-0 bg-[radial-gradient(circle_at_top,_rgba(232,197,71,0.18),_transparent_55%),radial-gradient(circle_at_30%_80%,_rgba(232,197,71,0.12),_transparent_45%),linear-gradient(120deg,_rgba(13,13,15,0.98),_rgba(9,9,11,0.95))]" />
-          <section className="relative mx-auto w-full max-w-6xl px-6 pb-6 pt-10">
+          <section className="relative mx-auto w-full max-w-6xl px-4 pb-6 pt-10 sm:px-6">
             <div className="flex flex-wrap items-center justify-between gap-4">
               <div>
                 <p className="text-xs uppercase tracking-[0.35em] text-[#e8c547]/70">

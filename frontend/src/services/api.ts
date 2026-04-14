@@ -14,10 +14,13 @@ async function request<T>(path: string, options: RequestOptions = {}): Promise<T
   const url = API_BASE_URL.startsWith("http")
     ? new URL(normalizedPath, API_BASE_URL).toString()
     : `${API_BASE_URL}${normalizedPath}`
-  const headers: HeadersInit = {
-    "Content-Type": "application/json",
-    ...options.headers,
-  }
+  const isFormData = options.body instanceof FormData
+  const headers: HeadersInit = isFormData
+    ? { ...options.headers }
+    : {
+        "Content-Type": "application/json",
+        ...options.headers,
+      }
 
   let response: Response
 
@@ -25,7 +28,7 @@ async function request<T>(path: string, options: RequestOptions = {}): Promise<T
     response = await fetch(url, {
       method: options.method ?? "GET",
       headers,
-      body: options.body ? JSON.stringify(options.body) : undefined,
+      body: options.body ? (isFormData ? options.body as FormData : JSON.stringify(options.body)) : undefined,
       signal: options.signal,
     })
   } catch (error) {

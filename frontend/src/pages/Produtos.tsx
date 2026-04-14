@@ -79,7 +79,7 @@ const EMPTY_RESPONSE: PaginatedResponse<ProdutoListItem> = {
   items: [],
   total: 0,
   skip: 0,
-  limit: 20,
+  limit: 16,
   pages: 0,
   current_page: 1,
   has_next: false,
@@ -95,11 +95,16 @@ type ProdutoDetalhesState = {
 type ProdutoFormState = {
   nome_produto: string;
   categoria_produto: string;
+  imagem_url: string;
   preco: string;
   peso_produto_gramas: string;
   comprimento_centimetros: string;
   altura_centimetros: string;
   largura_centimetros: string;
+};
+
+type UploadImagemResponse = {
+  image_url: string;
 };
 
 function formatNumberInput(value: number | null) {
@@ -118,6 +123,7 @@ function buildFormState(produto: Produto, preco: number): ProdutoFormState {
   return {
     nome_produto: produto.nome_produto,
     categoria_produto: produto.categoria_produto,
+    imagem_url: produto.imagem_url ?? "",
     preco: formatNumberInput(preco),
     peso_produto_gramas: formatNumberInput(produto.peso_produto_gramas),
     comprimento_centimetros: formatNumberInput(produto.comprimento_centimetros),
@@ -152,7 +158,9 @@ export function Produtos() {
   const [editLoading, setEditLoading] = useState(false);
   const [editSaving, setEditSaving] = useState(false);
   const [editError, setEditError] = useState<string | undefined>();
-  const pageSize = 20;
+  const [imageUploading, setImageUploading] = useState(false);
+  const [imageUploadError, setImageUploadError] = useState<string | undefined>();
+  const pageSize = 16;
   const categoriesRef = useRef<HTMLDivElement | null>(null);
   const cacheRef = useRef(
     new Map<string, PaginatedResponse<ProdutoListItem>>(),
@@ -277,6 +285,24 @@ export function Produtos() {
     setEditForm((current) => (current ? { ...current, [field]: value } : current));
   };
 
+  const handleImageUpload = async (file: File) => {
+    const formData = new FormData();
+    formData.append("file", file);
+
+    setImageUploading(true);
+    setImageUploadError(undefined);
+
+    try {
+      const response = await api.post<UploadImagemResponse>("/produtos/upload-imagem", formData);
+      setEditForm((current) => (current ? { ...current, imagem_url: response.image_url } : current));
+    } catch (err) {
+      const message = err instanceof Error ? err.message : "Erro ao enviar imagem";
+      setImageUploadError(message);
+    } finally {
+      setImageUploading(false);
+    }
+  };
+
   const handleDetailEdit = async () => {
     if (!detailState.produto) {
       return;
@@ -353,6 +379,7 @@ export function Produtos() {
       const produtoAtualizado = await api.patch<Produto>(`/produtos/${editingProductId}`, {
         nome_produto: editForm.nome_produto.trim(),
         categoria_produto: editForm.categoria_produto.trim(),
+        imagem_url: editForm.imagem_url.trim() || null,
         preco: parseOptionalNumber(editForm.preco),
         peso_produto_gramas: parseOptionalNumber(editForm.peso_produto_gramas),
         comprimento_centimetros: parseOptionalNumber(editForm.comprimento_centimetros),
@@ -370,6 +397,7 @@ export function Produtos() {
                 ...item,
                 nome_produto: produtoAtualizado.nome_produto,
                 categoria_produto: produtoAtualizado.categoria_produto,
+                imagem_url: produtoAtualizado.imagem_url,
                 preco: precoAtualizado,
               }
             : item,
@@ -399,7 +427,7 @@ export function Produtos() {
   };
 
   return (
-    <section className="mx-auto w-full max-w-6xl space-y-8 px-4 pb-16 sm:px-6">
+    <section className="mx-auto w-full max-w-full space-y-8 px-4 pb-16 pt-6 sm:max-w-6xl sm:px-6">
       <ProductsToolbar
         search={searchInput}
         total={catalogo.total}
@@ -411,13 +439,13 @@ export function Produtos() {
       />
 
       {/* Barra de filtros */}
-      <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
-        <div className="flex items-center gap-2">
+      <div className="flex w-full min-w-0 flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+        <div className="flex w-full min-w-0 items-center gap-2 sm:w-auto">
           <Filter size={16} className="text-slate-400" />
           <select
             value={sortBy}
             onChange={(e) => handleSortChange(e.target.value)}
-            className="rounded-lg border border-slate-600 bg-slate-800 px-3 py-2 text-sm text-slate-200 focus:border-slate-500 focus:outline-none"
+            className="w-full min-w-0 max-w-full rounded-lg border border-slate-600 bg-slate-800 px-3 py-2 text-sm text-slate-200 focus:border-slate-500 focus:outline-none sm:w-auto"
           >
             {SORT_OPTIONS.map((option) => (
               <option key={option.value} value={option.value}>
@@ -428,9 +456,9 @@ export function Produtos() {
         </div>
       </div>
 
-      <div className="mt-6 flex items-center gap-2">
+      <div className="mt-6 flex w-full min-w-0 items-center gap-2">
         <button
-          className="flex h-9 w-9 items-center justify-center rounded-full border border-[#1f1f24] bg-[#141417] text-slate-300 hover:border-[#e8c547]/40"
+          className="hidden h-9 w-9 items-center justify-center rounded-full border border-[#1f1f24] bg-[#141417] text-slate-300 hover:border-[#e8c547]/40 sm:flex"
           type="button"
           onClick={() => {
             categoriesRef.current?.scrollBy({ left: -220, behavior: "smooth" });
@@ -438,10 +466,10 @@ export function Produtos() {
         >
           <span className="text-lg">‹</span>
         </button>
-        <div className="flex flex-1 items-center gap-2 overflow-hidden">
+        <div className="flex min-w-0 flex-1 items-center gap-2 overflow-hidden">
           <div
             ref={categoriesRef}
-            className="flex flex-nowrap gap-2 overflow-x-auto no-scrollbar"
+            className="flex w-full min-w-0 flex-nowrap gap-2 overflow-x-auto no-scrollbar"
           >
             {CATEGORIES.map((category) => {
               const isActive = category === selectedCategory;
@@ -466,7 +494,7 @@ export function Produtos() {
           </div>
         </div>
         <button
-          className="flex h-9 w-9 items-center justify-center rounded-full border border-[#1f1f24] bg-[#141417] text-slate-300 hover:border-[#e8c547]/40"
+          className="hidden h-9 w-9 items-center justify-center rounded-full border border-[#1f1f24] bg-[#141417] text-slate-300 hover:border-[#e8c547]/40 sm:flex"
           type="button"
           onClick={() => {
             categoriesRef.current?.scrollBy({ left: 220, behavior: "smooth" });
@@ -518,7 +546,7 @@ export function Produtos() {
                   produto={detailState.produto}
                   vendas={detailState.vendas}
                   avaliacoes={detailState.avaliacoes}
-                  imageUrl={categoryImages[detailState.produto.categoria_produto]}
+                  imageUrl={detailState.produto.imagem_url ?? categoryImages[detailState.produto.categoria_produto]}
                   onEdit={() => {
                     void handleDetailEdit();
                   }}
@@ -581,6 +609,28 @@ export function Produtos() {
                       />
                     </label>
 
+                    <label className="space-y-2 text-sm text-slate-300 md:col-span-2">
+                      <span>Imagem do produto</span>
+                      <input
+                        className="w-full rounded-xl border border-slate-700 bg-slate-950 px-4 py-3 text-slate-100 file:mr-4 file:rounded-full file:border-0 file:bg-[#e8c547] file:px-4 file:py-2 file:text-sm file:font-semibold file:text-[#0d0d0f]"
+                        type="file"
+                        accept="image/*"
+                        onChange={(event) => {
+                          const file = event.target.files?.[0];
+                          if (file) {
+                            void handleImageUpload(file);
+                          }
+                        }}
+                      />
+                      {editForm.imagem_url ? (
+                        <img
+                          src={editForm.imagem_url}
+                          alt="Preview do produto"
+                          className="h-32 w-32 rounded-2xl object-cover"
+                        />
+                      ) : null}
+                    </label>
+
                     <label className="space-y-2 text-sm text-slate-300">
                       <span>Preço (BRL)</span>
                       <input
@@ -635,6 +685,18 @@ export function Produtos() {
                   {editError ? (
                     <div className="rounded-2xl border border-red-500/40 bg-red-500/10 p-4 text-sm text-red-200">
                       {editError}
+                    </div>
+                  ) : null}
+
+                  {imageUploadError ? (
+                    <div className="rounded-2xl border border-red-500/40 bg-red-500/10 p-4 text-sm text-red-200">
+                      {imageUploadError}
+                    </div>
+                  ) : null}
+
+                  {imageUploading ? (
+                    <div className="rounded-2xl border border-slate-700 bg-slate-900/40 p-4 text-sm text-slate-300">
+                      Enviando imagem...
                     </div>
                   ) : null}
 

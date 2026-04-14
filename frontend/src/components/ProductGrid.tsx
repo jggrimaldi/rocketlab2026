@@ -22,14 +22,14 @@ export function ProductGrid({
         <div className="rounded-3xl border border-slate-800/70 bg-slate-900/40 p-4 text-sm text-slate-300">
           Carregando produtos...
         </div>
-        <div className="grid gap-6 sm:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4">
+        <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 sm:gap-6 lg:grid-cols-3 xl:grid-cols-4">
           {Array.from({ length: 8 }, (_, index) => (
             <div
               key={index}
               className="overflow-hidden rounded-2xl border border-slate-800/70 bg-slate-900/40 animate-pulse"
             >
-              <div className="h-48 w-full bg-slate-800/60 sm:h-52" />
-              <div className="space-y-3 p-5">
+              <div className="h-32 w-full bg-slate-800/60 sm:h-40 lg:h-52" />
+              <div className="space-y-3 p-4 sm:p-5">
                 <div className="h-3 w-24 rounded bg-slate-800/60" />
                 <div className="h-5 w-3/4 rounded bg-slate-700/60" />
                 <div className="h-4 w-1/2 rounded bg-slate-800/60" />
@@ -60,7 +60,7 @@ export function ProductGrid({
   }
 
   return (
-    <div className="mt-8 grid gap-6 sm:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4">
+    <div className="mt-8 grid grid-cols-1 gap-3 sm:grid-cols-2 sm:gap-6 lg:grid-cols-3 xl:grid-cols-4">
       {produtos.map((produto) => (
         <ProductCard
           key={produto.id_produto}
