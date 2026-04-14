@@ -18,25 +18,25 @@ export function ProductRow({ produto, onEdit, onDelete, onView }: ProductRowProp
   const estoque = produto.estoque ?? 0
 
   return (
-    <tr className="border-b border-[#1f1f24] text-sm text-slate-200 hover:bg-[#141417]">
-      <td className="px-4 py-4 font-semibold text-slate-50">{produto.nome}</td>
-      <td className="px-4 py-4 text-slate-400">{produto.categoria}</td>
-      <td className="px-4 py-4 text-[#e8c547]">
+    <tr className="theme-border theme-text-primary border-b text-sm hover:bg-[color:var(--panel-muted)]">
+      <td className="px-4 py-4 font-semibold">{produto.nome}</td>
+      <td className="theme-text-muted px-4 py-4">{produto.categoria}</td>
+      <td className="theme-text-accent px-4 py-4">
         {produto.preco.toLocaleString("pt-BR", {
           style: "currency",
           currency: "BRL",
         })}
       </td>
-      <td className="px-4 py-4 text-slate-300">{estoque}</td>
-      <td className="px-4 py-4 text-slate-300">{produto.vendedor}</td>
-      <td className="px-4 py-4 text-[#e8c547]">
+      <td className="px-4 py-4">{estoque}</td>
+      <td className="px-4 py-4">{produto.vendedor}</td>
+      <td className="theme-text-accent px-4 py-4">
         {renderStars(produto.avaliacao_media)}
       </td>
       <td className="px-4 py-4">
         <div className="flex items-center gap-2">
           {onView ? (
             <button
-              className="rounded-full border border-[#1f1f24] bg-[#0d0d0f] p-2 text-slate-200 transition hover:border-[#e8c547]/60 hover:text-[#e8c547]"
+              className="theme-button-secondary rounded-full border p-2 transition hover:border-[color:var(--primary)]/60 hover:text-[color:var(--primary)]"
               onClick={() => onView(produto)}
               type="button"
             >
@@ -44,7 +44,7 @@ export function ProductRow({ produto, onEdit, onDelete, onView }: ProductRowProp
             </button>
           ) : null}
           <button
-            className="rounded-full border border-[#1f1f24] bg-[#0d0d0f] p-2 text-slate-200 transition hover:border-[#e8c547]/60 hover:text-[#e8c547]"
+            className="theme-button-secondary rounded-full border p-2 transition hover:border-[color:var(--primary)]/60 hover:text-[color:var(--primary)]"
             onClick={() => onEdit(produto)}
             type="button"
           >

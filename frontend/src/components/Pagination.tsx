@@ -26,7 +26,7 @@ export function Pagination({
   return (
     <div className="mt-10 flex flex-wrap items-center justify-center gap-2 px-1">
       <button
-        className="rounded-full border border-[#1f1f24] bg-[#141417] px-3 py-2 text-[10px] uppercase tracking-[0.2em] text-slate-200 disabled:cursor-not-allowed disabled:opacity-40 sm:px-4 sm:text-xs sm:tracking-[0.3em]"
+        className="theme-button-secondary rounded-full border px-3 py-2 text-[10px] uppercase tracking-[0.2em] disabled:cursor-not-allowed disabled:opacity-40 sm:px-4 sm:text-xs sm:tracking-[0.3em]"
         onClick={() => onPageChange(Math.max(1, clampedCurrent - 1))}
         disabled={clampedCurrent === 1}
         type="button"
@@ -38,9 +38,9 @@ export function Pagination({
           key={page}
           className={`h-10 w-10 rounded-full border text-sm font-semibold transition ${
             page === currentPage
-              ? "border-[#e8c547]/60 bg-[#e8c547]/15 text-[#e8c547]"
-              : "border-[#1f1f24] bg-[#141417] text-slate-200 hover:border-[#e8c547]/40"
-          }`}
+              ? "theme-nav-active"
+              : "theme-button-secondary"
+           }`}
           onClick={() => onPageChange(page)}
           type="button"
         >
@@ -48,7 +48,7 @@ export function Pagination({
         </button>
       ))}
       <button
-        className="rounded-full border border-[#1f1f24] bg-[#141417] px-3 py-2 text-[10px] uppercase tracking-[0.2em] text-slate-200 disabled:cursor-not-allowed disabled:opacity-40 sm:px-4 sm:text-xs sm:tracking-[0.3em]"
+        className="theme-button-secondary rounded-full border px-3 py-2 text-[10px] uppercase tracking-[0.2em] disabled:cursor-not-allowed disabled:opacity-40 sm:px-4 sm:text-xs sm:tracking-[0.3em]"
         onClick={() => onPageChange(Math.min(totalPages, clampedCurrent + 1))}
         disabled={clampedCurrent === totalPages}
         type="button"

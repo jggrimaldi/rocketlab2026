@@ -65,10 +65,10 @@ function MetricCard({
   className?: string
 }) {
   return (
-    <div className={`rounded-3xl border border-[#1f1f24] bg-[#141417] p-5 shadow-lg shadow-black/20 ${className ?? ""}`}>
-      <p className="text-xs uppercase tracking-[0.3em] text-slate-500">{label}</p>
-      <p className="mt-3 break-words text-2xl font-semibold text-slate-50 sm:text-3xl">{value}</p>
-      {helper ? <p className="mt-2 text-sm text-slate-400">{helper}</p> : null}
+    <div className={`theme-surface rounded-3xl border p-5 shadow-lg shadow-black/10 ${className ?? ""}`}>
+      <p className="theme-text-muted text-xs uppercase tracking-[0.3em]">{label}</p>
+      <p className="theme-text-primary mt-3 break-words text-2xl font-semibold sm:text-3xl">{value}</p>
+      {helper ? <p className="theme-text-muted mt-2 text-sm">{helper}</p> : null}
     </div>
   )
 }
@@ -83,11 +83,11 @@ function SectionCard({
   children: React.ReactNode
 }) {
   return (
-    <section className="rounded-3xl border border-[#1f1f24] bg-[#141417] p-6 shadow-lg shadow-black/20">
+    <section className="theme-surface rounded-3xl border p-6 shadow-lg shadow-black/10">
       <div className="mb-5 flex items-center justify-between gap-4">
         <div>
-          <h2 className="text-lg font-semibold text-slate-50">{title}</h2>
-          {subtitle ? <p className="mt-1 text-sm text-slate-400">{subtitle}</p> : null}
+          <h2 className="theme-text-primary text-lg font-semibold">{title}</h2>
+          {subtitle ? <p className="theme-text-muted mt-1 text-sm">{subtitle}</p> : null}
         </div>
       </div>
       {children}
@@ -138,7 +138,7 @@ export function Dashboard() {
   if (isLoading || (!state.resumo && !error)) {
     return (
       <section className="mx-auto w-full max-w-6xl space-y-6 px-4 pb-16 pt-6 sm:px-6">
-        <div className="rounded-3xl border border-slate-800/70 bg-slate-900/40 p-8 text-slate-200">
+        <div className="theme-surface-muted rounded-3xl border p-8">
           Carregando dashboard...
         </div>
       </section>
@@ -166,7 +166,8 @@ export function Dashboard() {
 
   return (
     <section className="mx-auto w-full max-w-6xl space-y-8 px-4 pb-16 pt-6 sm:px-6">
-      <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-5">
+      <div className="theme-surface-muted rounded-3xl border p-4 sm:p-5">
+        <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-5">
         <MetricCard label="Produtos" value={state.resumo.total_produtos.toLocaleString("pt-BR")} />
         <MetricCard label="Consumidores" value={state.resumo.total_consumidores.toLocaleString("pt-BR")} />
         <MetricCard label="Pedidos" value={state.resumo.total_pedidos.toLocaleString("pt-BR")} />
@@ -180,23 +181,24 @@ export function Dashboard() {
           value={state.resumo.avaliacao_media_geral.toFixed(2)}
           helper="Media consolidada das avaliacoes"
         />
+        </div>
       </div>
 
       <div className="grid gap-6 xl:grid-cols-2">
         <SectionCard title="Top 10 Mais Vendidos" subtitle="Produtos com maior volume de vendas agregado no backend">
           <div className="space-y-3">
             {state.topVendas.map((item, index) => (
-              <div key={item.id_produto} className="rounded-2xl border border-[#1f1f24] bg-[#0f0f12] p-4">
+              <div key={item.id_produto} className="theme-surface-muted rounded-2xl border p-4">
                 <div className="flex items-start justify-between gap-4">
                   <div>
-                    <p className="text-xs uppercase tracking-[0.3em] text-[#e8c547]">#{index + 1}</p>
-                    <h3 className="mt-2 text-base font-semibold text-slate-50">{item.nome_produto}</h3>
-                    <p className="mt-1 text-sm text-slate-400">{item.categoria_produto}</p>
+                    <p className="theme-text-accent text-xs uppercase tracking-[0.3em]">#{index + 1}</p>
+                    <h3 className="theme-text-primary mt-2 text-base font-semibold">{item.nome_produto}</h3>
+                    <p className="theme-text-muted mt-1 text-sm">{item.categoria_produto}</p>
                   </div>
-                  <div className="text-right text-sm text-slate-300">
+                  <div className="theme-text-primary text-right text-sm">
                     <p>{item.total_vendas} vendas</p>
-                    <p className="mt-1 text-[#e8c547]">{currency.format(item.receita_total)}</p>
-                    <p className="mt-1 text-slate-500">Medio {currency.format(item.preco_medio)}</p>
+                    <p className="theme-text-accent mt-1">{currency.format(item.receita_total)}</p>
+                    <p className="theme-text-muted mt-1">Medio {currency.format(item.preco_medio)}</p>
                   </div>
                 </div>
               </div>
@@ -207,15 +209,15 @@ export function Dashboard() {
         <SectionCard title="Top 10 Mais Bem Avaliados" subtitle="Classificacao por media e volume de avaliacoes">
           <div className="space-y-3">
             {state.topAvaliados.map((item, index) => (
-              <div key={item.id_produto} className="rounded-2xl border border-[#1f1f24] bg-[#0f0f12] p-4">
+              <div key={item.id_produto} className="theme-surface-muted rounded-2xl border p-4">
                 <div className="flex items-start justify-between gap-4">
                   <div>
-                    <p className="text-xs uppercase tracking-[0.3em] text-[#e8c547]">#{index + 1}</p>
-                    <h3 className="mt-2 text-base font-semibold text-slate-50">{item.nome_produto}</h3>
-                    <p className="mt-1 text-sm text-slate-400">{item.categoria_produto}</p>
+                    <p className="theme-text-accent text-xs uppercase tracking-[0.3em]">#{index + 1}</p>
+                    <h3 className="theme-text-primary mt-2 text-base font-semibold">{item.nome_produto}</h3>
+                    <p className="theme-text-muted mt-1 text-sm">{item.categoria_produto}</p>
                   </div>
-                  <div className="text-right text-sm text-slate-300">
-                    <p className="text-[#e8c547]">{item.avaliacao_media.toFixed(2)}</p>
+                  <div className="theme-text-primary text-right text-sm">
+                    <p className="theme-text-accent">{item.avaliacao_media.toFixed(2)}</p>
                     <p className="mt-1">{item.total_avaliacoes} avaliacoes</p>
                   </div>
                 </div>
@@ -231,18 +233,18 @@ export function Dashboard() {
             {state.categorias.map((categoria) => (
               <div key={categoria.categoria_produto} className="space-y-2">
                 <div className="flex items-center justify-between gap-4 text-sm">
-                  <span className="font-medium text-slate-200">{categoria.categoria_produto}</span>
-                  <span className="text-slate-400">
+                  <span className="theme-text-primary font-medium">{categoria.categoria_produto}</span>
+                  <span className="theme-text-muted">
                     {categoria.total_produtos} produtos • {categoria.total_vendas} vendas
                   </span>
                 </div>
-                <div className="h-3 overflow-hidden rounded-full bg-[#0f0f12]">
+                <div className="theme-surface-muted h-3 overflow-hidden rounded-full border">
                   <div
-                    className="h-full rounded-full bg-[#e8c547]"
+                    className="h-full rounded-full bg-gradient-to-r from-[color:var(--primary)] to-[color:var(--positive)]"
                     style={{ width: `${(categoria.total_produtos / maxCategoriaProdutos) * 100}%` }}
                   />
                 </div>
-                <p className="text-right text-xs uppercase tracking-[0.3em] text-slate-500">
+                <p className="theme-text-muted text-right text-xs uppercase tracking-[0.3em]">
                   {currency.format(categoria.receita_total)}
                 </p>
               </div>
@@ -254,17 +256,17 @@ export function Dashboard() {
           <div className="space-y-4">
             {state.receitaMensal.map((item) => (
               <div key={item.mes} className="space-y-2">
-                <div className="flex items-center justify-between gap-4 text-sm text-slate-300">
+                <div className="theme-text-primary flex items-center justify-between gap-4 text-sm">
                   <span>{item.mes}</span>
                   <span>{currency.format(item.receita_total)}</span>
                 </div>
-                <div className="h-2 overflow-hidden rounded-full bg-[#0f0f12]">
+                <div className="theme-surface-muted h-2 overflow-hidden rounded-full border">
                   <div
-                    className="h-full rounded-full bg-gradient-to-r from-[#e8c547] to-amber-300"
+                    className="h-full rounded-full bg-gradient-to-r from-[color:var(--primary)] to-[color:var(--positive)]"
                     style={{ width: `${(item.receita_total / maxReceitaMensal) * 100}%` }}
                   />
                 </div>
-                <p className="text-xs uppercase tracking-[0.3em] text-slate-500">
+                <p className="theme-text-muted text-xs uppercase tracking-[0.3em]">
                   {item.total_pedidos} pedidos
                 </p>
               </div>

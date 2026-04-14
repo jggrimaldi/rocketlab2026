@@ -18,28 +18,28 @@ export function ProductTable({
 }: ProductTableProps) {
   if (isLoading) {
     return (
-      <div className="rounded-3xl border border-[#1f1f24] bg-[#141417] p-8 text-slate-200">
-        Carregando produtos...
-      </div>
+        <div className="theme-surface rounded-3xl border p-8">
+          Carregando produtos...
+        </div>
     )
   }
 
   if (products.length === 0) {
     return (
-      <div className="rounded-3xl border border-[#1f1f24] bg-[#141417] p-8 text-slate-400">
-        Nenhum produto encontrado
-      </div>
+        <div className="theme-surface rounded-3xl border p-8 theme-text-muted">
+          Nenhum produto encontrado
+        </div>
     )
   }
 
   return (
     <div className="space-y-3">
-      <div className="px-1 text-xs uppercase tracking-[0.2em] text-slate-500 sm:hidden">
-        Arraste a tabela para o lado para ver mais colunas e acoes.
-      </div>
-      <div className="overflow-x-auto rounded-3xl border border-[#1f1f24] bg-[#141417] [-webkit-overflow-scrolling:touch]">
+        <div className="theme-text-muted px-1 text-xs uppercase tracking-[0.2em] sm:hidden">
+          Arraste a tabela para o lado para ver mais colunas e acoes.
+        </div>
+      <div className="theme-surface overflow-x-auto rounded-3xl border [-webkit-overflow-scrolling:touch]">
         <table className="min-w-[760px] border-collapse text-left sm:min-w-full">
-        <thead className="bg-[#0f0f12] text-xs uppercase tracking-[0.3em] text-slate-500">
+        <thead className="theme-surface-muted theme-text-muted text-xs uppercase tracking-[0.3em]">
           <tr>
             <th className="px-4 py-4">Nome do produto</th>
             <th className="px-4 py-4">Categoria</th>

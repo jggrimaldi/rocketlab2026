@@ -81,7 +81,7 @@ export default function ProductDetail({
   return (
     <div className="space-y-8 sm:space-y-10">
       <section className="grid gap-6 lg:grid-cols-[1.05fr_1.2fr] lg:gap-8">
-        <div className="flex min-h-[220px] items-center justify-center overflow-hidden rounded-3xl border border-[#1f1f24] bg-[#141417] text-slate-400 sm:min-h-[280px]">
+        <div className="theme-surface flex min-h-[220px] items-center justify-center overflow-hidden rounded-3xl border sm:min-h-[280px]">
           {imageUrl ? (
             <img
               src={imageUrl}
@@ -91,7 +91,7 @@ export default function ProductDetail({
               decoding="async"
             />
           ) : (
-            <div className="flex h-24 w-24 items-center justify-center rounded-full border border-[#2a2a31] bg-[#0d0d0f] text-2xl font-semibold uppercase tracking-[0.3em] text-[#e8c547]">
+            <div className="theme-surface-muted theme-text-accent flex h-24 w-24 items-center justify-center rounded-full border text-2xl font-semibold uppercase tracking-[0.3em]">
               {initials || "CT"}
             </div>
           )}
@@ -99,70 +99,70 @@ export default function ProductDetail({
 
         <div className="space-y-5 sm:space-y-6">
           <div className="flex flex-wrap items-center gap-2">
-            <span className="rounded-full bg-[#1a1a1f] px-3 py-1 text-xs font-semibold uppercase tracking-[0.3em] text-[#e8c547]">
+            <span className="theme-bg-accent-soft theme-text-accent rounded-full px-3 py-1 text-xs font-semibold uppercase tracking-[0.3em]">
               {categoria.replaceAll("_", " ")}
             </span>
-            <span className="rounded-full bg-[#e8c547]/15 px-3 py-1 text-xs font-semibold uppercase tracking-[0.3em] text-[#e8c547]">
+            <span className="rounded-full bg-[color:var(--positive)]/12 px-3 py-1 text-xs font-semibold uppercase tracking-[0.3em] text-[color:var(--positive)]">
               Em estoque
             </span>
           </div>
 
           <div>
-            <p className="break-all text-xs uppercase tracking-[0.25em] text-slate-500 sm:text-sm sm:tracking-[0.35em]">
+            <p className="theme-text-muted break-all text-xs uppercase tracking-[0.25em] sm:text-sm sm:tracking-[0.35em]">
               {produto.id_produto}
             </p>
-            <h2 className="mt-3 break-words text-2xl font-semibold text-slate-50 sm:text-3xl">
+            <h2 className="theme-text-primary mt-3 break-words text-2xl font-semibold sm:text-3xl">
               {produto.nome_produto || "—"}
             </h2>
-            <p className="mt-2 text-xl font-semibold text-[#e8c547] sm:text-2xl">
+            <p className="theme-text-accent mt-2 text-xl font-semibold sm:text-2xl">
               {currency.format(averagePrice)}
             </p>
           </div>
 
           <div className="grid grid-cols-1 gap-3 sm:grid-cols-3">
-            <div className="rounded-2xl border border-[#1f1f24] bg-[#141417] p-4">
-              <p className="text-xs uppercase tracking-[0.3em] text-slate-500">Vendas</p>
-              <p className="mt-2 text-xl font-semibold text-slate-50">
+            <div className="theme-surface rounded-2xl border p-4">
+              <p className="theme-text-muted text-xs uppercase tracking-[0.3em]">Vendas</p>
+              <p className="theme-text-primary mt-2 text-xl font-semibold">
                 {vendas.total_vendas}
               </p>
             </div>
-            <div className="rounded-2xl border border-[#1f1f24] bg-[#141417] p-4">
-              <p className="text-xs uppercase tracking-[0.3em] text-slate-500">Avaliacao</p>
-              <p className="mt-2 text-xl font-semibold text-slate-50">
+            <div className="theme-surface rounded-2xl border p-4">
+              <p className="theme-text-muted text-xs uppercase tracking-[0.3em]">Avaliacao</p>
+              <p className="theme-text-primary mt-2 text-xl font-semibold">
                 {avaliacoes.media.toFixed(2)}
               </p>
-              <p className="mt-1 text-xs text-[#e8c547]">
+              <p className="theme-text-accent mt-1 text-xs">
                 {renderStars(avaliacoes.media)}
               </p>
             </div>
-            <div className="rounded-2xl border border-[#1f1f24] bg-[#141417] p-4">
-              <p className="text-xs uppercase tracking-[0.3em] text-slate-500">Estoque</p>
-              <p className="mt-2 text-xl font-semibold text-slate-50">0</p>
+            <div className="theme-surface rounded-2xl border p-4">
+              <p className="theme-text-muted text-xs uppercase tracking-[0.3em]">Estoque</p>
+              <p className="theme-text-primary mt-2 text-xl font-semibold">0</p>
             </div>
           </div>
 
           <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
-            <div className="rounded-2xl border border-[#1f1f24] bg-[#141417] p-4">
-              <p className="text-xs uppercase tracking-[0.3em] text-slate-500">Peso</p>
-              <p className="mt-2 text-base font-semibold text-slate-50">
+            <div className="theme-surface rounded-2xl border p-4">
+              <p className="theme-text-muted text-xs uppercase tracking-[0.3em]">Peso</p>
+              <p className="theme-text-primary mt-2 text-base font-semibold">
                 {formatPeso(produto.peso_produto_gramas)}
               </p>
             </div>
-            <div className="rounded-2xl border border-[#1f1f24] bg-[#141417] p-4">
-              <p className="text-xs uppercase tracking-[0.3em] text-slate-500">Altura</p>
-              <p className="mt-2 text-base font-semibold text-slate-50">
+            <div className="theme-surface rounded-2xl border p-4">
+              <p className="theme-text-muted text-xs uppercase tracking-[0.3em]">Altura</p>
+              <p className="theme-text-primary mt-2 text-base font-semibold">
                 {formatMedida(produto.altura_centimetros)}
               </p>
             </div>
-            <div className="rounded-2xl border border-[#1f1f24] bg-[#141417] p-4">
-              <p className="text-xs uppercase tracking-[0.3em] text-slate-500">Largura</p>
-              <p className="mt-2 text-base font-semibold text-slate-50">
+            <div className="theme-surface rounded-2xl border p-4">
+              <p className="theme-text-muted text-xs uppercase tracking-[0.3em]">Largura</p>
+              <p className="theme-text-primary mt-2 text-base font-semibold">
                 {formatMedida(produto.largura_centimetros)}
               </p>
             </div>
-            <div className="rounded-2xl border border-[#1f1f24] bg-[#141417] p-4">
-              <p className="text-xs uppercase tracking-[0.3em] text-slate-500">Comprimento</p>
-              <p className="mt-2 text-base font-semibold text-slate-50">
+            <div className="theme-surface rounded-2xl border p-4">
+              <p className="theme-text-muted text-xs uppercase tracking-[0.3em]">Comprimento</p>
+              <p className="theme-text-primary mt-2 text-base font-semibold">
                 {formatMedida(produto.comprimento_centimetros)}
               </p>
             </div>
@@ -170,7 +170,7 @@ export default function ProductDetail({
 
           <div className="flex flex-col gap-3 sm:flex-row sm:flex-wrap">
             <button
-              className="w-full rounded-full border border-[#1f1f24] bg-[#141417] px-4 py-2 text-sm font-semibold text-slate-200 shadow-sm transition hover:border-[#2a2a31] sm:w-auto"
+              className="theme-button-secondary w-full rounded-full border px-4 py-2 text-sm font-semibold shadow-sm transition sm:w-auto"
               onClick={onEdit}
               type="button"
             >
@@ -189,30 +189,30 @@ export default function ProductDetail({
 
       <section className="space-y-6">
         <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
-          <h3 className="text-lg font-semibold text-slate-50 sm:text-xl">Ultimas avaliacoes</h3>
-          <span className="w-fit rounded-full bg-[#141417] px-3 py-1 text-xs uppercase tracking-[0.3em] text-slate-500">
+          <h3 className="theme-text-primary text-lg font-semibold sm:text-xl">Ultimas avaliacoes</h3>
+          <span className="theme-surface-muted theme-text-muted w-fit rounded-full border px-3 py-1 text-xs uppercase tracking-[0.3em]">
             {avaliacoes.total_avaliacoes} registros
           </span>
         </div>
 
         {avaliacoes.avaliacoes.length === 0 ? (
-          <div className="rounded-2xl border border-[#1f1f24] bg-[#141417] p-6 text-sm text-slate-400">
-            Nenhuma avaliacao ainda
-          </div>
+           <div className="theme-surface rounded-2xl border p-6 text-sm theme-text-muted">
+             Nenhuma avaliacao ainda
+           </div>
         ) : (
           <div className="grid grid-cols-1 gap-4 md:grid-cols-3">
             {avaliacoes.avaliacoes.slice(0, 3).map((avaliacao) => (
               <div
                 key={avaliacao.id_avaliacao}
-                className="rounded-2xl border border-[#1f1f24] bg-[#141417] p-5"
+                className="theme-surface rounded-2xl border p-5"
               >
                 <div className="flex items-center justify-between">
-                  <p className="text-sm font-semibold text-slate-50">Consumidor</p>
-                  <span className="text-xs text-[#e8c547]">
+                  <p className="theme-text-primary text-sm font-semibold">Consumidor</p>
+                  <span className="theme-text-accent text-xs">
                     {renderStars(avaliacao.avaliacao)}
                   </span>
                 </div>
-                <p className="mt-3 text-sm text-slate-300">
+                <p className="theme-text-primary mt-3 text-sm">
                   {avaliacao.comentario || "—"}
                 </p>
               </div>

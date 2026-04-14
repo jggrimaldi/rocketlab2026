@@ -441,11 +441,11 @@ export function Produtos() {
       {/* Barra de filtros */}
       <div className="flex w-full min-w-0 flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
         <div className="flex w-full min-w-0 items-center gap-2 sm:w-auto">
-          <Filter size={16} className="text-slate-400" />
+          <Filter size={16} className="theme-text-muted" />
           <select
             value={sortBy}
             onChange={(e) => handleSortChange(e.target.value)}
-            className="w-full min-w-0 max-w-full rounded-lg border border-slate-600 bg-slate-800 px-3 py-2 text-sm text-slate-200 focus:border-slate-500 focus:outline-none sm:w-auto"
+            className="theme-input w-full min-w-0 max-w-full rounded-lg border px-3 py-2 text-sm focus:outline-none sm:w-auto"
           >
             {SORT_OPTIONS.map((option) => (
               <option key={option.value} value={option.value}>
@@ -458,7 +458,7 @@ export function Produtos() {
 
       <div className="mt-6 flex w-full min-w-0 items-center gap-2">
         <button
-          className="hidden h-9 w-9 items-center justify-center rounded-full border border-[#1f1f24] bg-[#141417] text-slate-300 hover:border-[#e8c547]/40 sm:flex"
+          className="theme-button-secondary hidden h-9 w-9 items-center justify-center rounded-full border sm:flex"
           type="button"
           onClick={() => {
             categoriesRef.current?.scrollBy({ left: -220, behavior: "smooth" });
@@ -478,9 +478,9 @@ export function Produtos() {
                   key={category}
                   className={`whitespace-nowrap rounded-full border px-3 py-1.5 text-xs font-semibold uppercase tracking-[0.3em] transition ${
                     isActive
-                      ? "border-[#e8c547]/60 bg-[#e8c547]/15 text-[#e8c547]"
-                      : "border-[#1f1f24] bg-[#141417] text-slate-300 hover:border-[#e8c547]/40"
-                  }`}
+                      ? "theme-nav-active"
+                      : "theme-button-secondary"
+                   }`}
                   type="button"
                   onClick={() => {
                     setSelectedCategory(category);
@@ -494,7 +494,7 @@ export function Produtos() {
           </div>
         </div>
         <button
-          className="hidden h-9 w-9 items-center justify-center rounded-full border border-[#1f1f24] bg-[#141417] text-slate-300 hover:border-[#e8c547]/40 sm:flex"
+          className="theme-button-secondary hidden h-9 w-9 items-center justify-center rounded-full border sm:flex"
           type="button"
           onClick={() => {
             categoriesRef.current?.scrollBy({ left: 220, behavior: "smooth" });
@@ -518,11 +518,11 @@ export function Produtos() {
 
       {detailProductId ? (
         <div className="fixed inset-0 z-50 flex items-start justify-center bg-black/70 px-4 py-10">
-          <div className="max-h-[90vh] w-full max-w-5xl overflow-y-auto rounded-3xl border border-[#1f1f24] bg-[#0f0f12] shadow-2xl">
-            <div className="sticky top-0 z-10 flex items-center justify-between border-b border-[#1f1f24] bg-[#0f0f12] px-6 py-4">
-              <h2 className="text-lg font-semibold text-slate-50">Detalhes do produto</h2>
+          <div className="theme-surface-muted max-h-[90vh] w-full max-w-5xl overflow-y-auto rounded-3xl border shadow-2xl">
+            <div className="theme-surface-muted theme-border sticky top-0 z-10 flex items-center justify-between border-b px-6 py-4">
+              <h2 className="theme-text-primary text-lg font-semibold">Detalhes do produto</h2>
               <button
-                className="rounded-full border border-[#1f1f24] bg-[#141417] px-4 py-2 text-sm text-slate-200"
+                className="theme-button-secondary rounded-full border px-4 py-2 text-sm"
                 onClick={() => {
                   setDetailProductId(null);
                   setDetailError(undefined);
@@ -534,9 +534,9 @@ export function Produtos() {
             </div>
             <div className="p-6">
               {detailLoading ? (
-                <div className="rounded-3xl border border-slate-800/70 bg-slate-900/40 p-8 text-slate-200">
-                  Carregando detalhes do produto...
-                </div>
+                  <div className="theme-surface rounded-3xl border p-8">
+                    Carregando detalhes do produto...
+                  </div>
               ) : detailError ? (
                 <div className="rounded-3xl border border-red-500/40 bg-red-500/10 p-8 text-red-200">
                   {detailError}
@@ -562,11 +562,11 @@ export function Produtos() {
 
       {editingProductId ? (
         <div className="fixed inset-0 z-[60] flex items-start justify-center bg-black/70 px-4 py-10">
-          <div className="max-h-[90vh] w-full max-w-3xl overflow-y-auto rounded-3xl border border-[#1f1f24] bg-[#0f0f12] shadow-2xl">
-            <div className="sticky top-0 z-10 flex items-center justify-between border-b border-[#1f1f24] bg-[#0f0f12] px-6 py-4">
-              <h2 className="text-lg font-semibold text-slate-50">Editar produto</h2>
+          <div className="theme-surface-muted max-h-[90vh] w-full max-w-3xl overflow-y-auto rounded-3xl border shadow-2xl">
+            <div className="theme-surface-muted theme-border sticky top-0 z-10 flex items-center justify-between border-b px-6 py-4">
+              <h2 className="theme-text-primary text-lg font-semibold">Editar produto</h2>
               <button
-                className="rounded-full border border-[#1f1f24] bg-[#141417] px-4 py-2 text-sm text-slate-200"
+                className="theme-button-secondary rounded-full border px-4 py-2 text-sm"
                 onClick={() => {
                   if (editSaving) {
                     return;
@@ -583,36 +583,36 @@ export function Produtos() {
             </div>
             <div className="p-6">
               {editLoading ? (
-                <div className="rounded-3xl border border-slate-800/70 bg-slate-900/40 p-8 text-slate-200">
-                  Carregando produto...
-                </div>
+                  <div className="theme-surface rounded-3xl border p-8">
+                    Carregando produto...
+                  </div>
               ) : editForm ? (
                 <form className="space-y-6" onSubmit={handleEditSubmit}>
                   <div className="grid gap-4 md:grid-cols-2">
-                    <label className="space-y-2 text-sm text-slate-300">
+                    <label className="theme-text-primary space-y-2 text-sm">
                       <span>Nome do produto</span>
                       <input
-                        className="w-full rounded-xl border border-slate-700 bg-slate-950 px-4 py-3 text-slate-100"
+                        className="theme-input w-full rounded-xl border px-4 py-3"
                         value={editForm.nome_produto}
                         onChange={(event) => handleEditFieldChange("nome_produto", event.target.value)}
                         required
                       />
                     </label>
 
-                    <label className="space-y-2 text-sm text-slate-300">
+                    <label className="theme-text-primary space-y-2 text-sm">
                       <span>Categoria</span>
                       <input
-                        className="w-full rounded-xl border border-slate-700 bg-slate-950 px-4 py-3 text-slate-100"
+                        className="theme-input w-full rounded-xl border px-4 py-3"
                         value={editForm.categoria_produto}
                         onChange={(event) => handleEditFieldChange("categoria_produto", event.target.value)}
                         required
                       />
                     </label>
 
-                    <label className="space-y-2 text-sm text-slate-300 md:col-span-2">
+                    <label className="theme-text-primary space-y-2 text-sm md:col-span-2">
                       <span>Imagem do produto</span>
                       <input
-                        className="w-full rounded-xl border border-slate-700 bg-slate-950 px-4 py-3 text-slate-100 file:mr-4 file:rounded-full file:border-0 file:bg-[#e8c547] file:px-4 file:py-2 file:text-sm file:font-semibold file:text-[#0d0d0f]"
+                        className="theme-input w-full rounded-xl border px-4 py-3 file:mr-4 file:rounded-full file:border-0 file:bg-[color:var(--primary)] file:px-4 file:py-2 file:text-sm file:font-semibold file:text-[color:var(--primary-contrast)]"
                         type="file"
                         accept="image/*"
                         onChange={(event) => {
@@ -631,50 +631,50 @@ export function Produtos() {
                       ) : null}
                     </label>
 
-                    <label className="space-y-2 text-sm text-slate-300">
+                    <label className="theme-text-primary space-y-2 text-sm">
                       <span>Preço (BRL)</span>
                       <input
-                        className="w-full rounded-xl border border-slate-700 bg-slate-950 px-4 py-3 text-slate-100"
+                        className="theme-input w-full rounded-xl border px-4 py-3"
                         value={editForm.preco}
                         onChange={(event) => handleEditFieldChange("preco", event.target.value)}
                         inputMode="decimal"
                       />
                     </label>
 
-                    <label className="space-y-2 text-sm text-slate-300">
+                    <label className="theme-text-primary space-y-2 text-sm">
                       <span>Peso (g)</span>
                       <input
-                        className="w-full rounded-xl border border-slate-700 bg-slate-950 px-4 py-3 text-slate-100"
+                        className="theme-input w-full rounded-xl border px-4 py-3"
                         value={editForm.peso_produto_gramas}
                         onChange={(event) => handleEditFieldChange("peso_produto_gramas", event.target.value)}
                         inputMode="decimal"
                       />
                     </label>
 
-                    <label className="space-y-2 text-sm text-slate-300">
+                    <label className="theme-text-primary space-y-2 text-sm">
                       <span>Comprimento (cm)</span>
                       <input
-                        className="w-full rounded-xl border border-slate-700 bg-slate-950 px-4 py-3 text-slate-100"
+                        className="theme-input w-full rounded-xl border px-4 py-3"
                         value={editForm.comprimento_centimetros}
                         onChange={(event) => handleEditFieldChange("comprimento_centimetros", event.target.value)}
                         inputMode="decimal"
                       />
                     </label>
 
-                    <label className="space-y-2 text-sm text-slate-300">
+                    <label className="theme-text-primary space-y-2 text-sm">
                       <span>Altura (cm)</span>
                       <input
-                        className="w-full rounded-xl border border-slate-700 bg-slate-950 px-4 py-3 text-slate-100"
+                        className="theme-input w-full rounded-xl border px-4 py-3"
                         value={editForm.altura_centimetros}
                         onChange={(event) => handleEditFieldChange("altura_centimetros", event.target.value)}
                         inputMode="decimal"
                       />
                     </label>
 
-                    <label className="space-y-2 text-sm text-slate-300">
+                    <label className="theme-text-primary space-y-2 text-sm">
                       <span>Largura (cm)</span>
                       <input
-                        className="w-full rounded-xl border border-slate-700 bg-slate-950 px-4 py-3 text-slate-100"
+                        className="theme-input w-full rounded-xl border px-4 py-3"
                         value={editForm.largura_centimetros}
                         onChange={(event) => handleEditFieldChange("largura_centimetros", event.target.value)}
                         inputMode="decimal"
@@ -695,14 +695,14 @@ export function Produtos() {
                   ) : null}
 
                   {imageUploading ? (
-                    <div className="rounded-2xl border border-slate-700 bg-slate-900/40 p-4 text-sm text-slate-300">
+                    <div className="theme-surface rounded-2xl border p-4 text-sm theme-text-muted">
                       Enviando imagem...
                     </div>
                   ) : null}
 
                   <div className="flex justify-end gap-3">
                     <button
-                      className="rounded-full border border-[#1f1f24] bg-[#141417] px-4 py-2 text-sm font-semibold text-slate-200"
+                      className="theme-button-secondary rounded-full border px-4 py-2 text-sm font-semibold"
                       onClick={() => {
                         setEditingProductId(null);
                         setEditForm(null);
@@ -713,7 +713,7 @@ export function Produtos() {
                       Cancelar
                     </button>
                     <button
-                      className="rounded-full bg-[#e8c547] px-5 py-2 text-sm font-semibold text-[#0d0d0f] disabled:cursor-not-allowed disabled:opacity-60"
+                      className="theme-button-primary rounded-full px-5 py-2 text-sm font-semibold disabled:cursor-not-allowed disabled:opacity-60"
                       disabled={editSaving}
                       type="submit"
                     >

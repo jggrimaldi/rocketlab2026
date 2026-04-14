@@ -15,13 +15,13 @@ export function ProductsToolbar({
     <div className="flex min-w-0 flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
       <div className="flex min-w-0 flex-wrap items-center gap-3">
         <input
-          className="h-11 w-full min-w-0 rounded-full border border-[#1f1f24] bg-[#0d0d0f] px-4 text-sm text-slate-100 placeholder:text-slate-500 sm:w-64"
+          className="theme-input h-11 w-full min-w-0 rounded-full border px-4 text-sm sm:w-64"
           placeholder="Buscar produto"
           value={search}
           onChange={(event) => onSearchChange(event.target.value)}
         />
       </div>
-      <p className="text-xs uppercase tracking-[0.2em] text-slate-500 sm:text-right">
+      <p className="theme-text-muted text-xs uppercase tracking-[0.2em] sm:text-right">
         {isSearching ? "Buscando..." : `${total} produtos`}
       </p>
     </div>

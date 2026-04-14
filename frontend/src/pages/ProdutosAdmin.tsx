@@ -162,11 +162,11 @@ function Modal({
 }) {
   return (
     <div className="fixed inset-0 z-50 flex items-start justify-center bg-black/70 px-4 py-10">
-      <div className="max-h-[90vh] w-full max-w-5xl overflow-y-auto rounded-3xl border border-[#1f1f24] bg-[#0f0f12] shadow-2xl">
-        <div className="sticky top-0 z-10 flex items-center justify-between border-b border-[#1f1f24] bg-[#0f0f12] px-6 py-4">
-          <h2 className="text-lg font-semibold text-slate-50">{title}</h2>
+      <div className="theme-surface-muted max-h-[90vh] w-full max-w-5xl overflow-y-auto rounded-3xl border shadow-2xl">
+        <div className="theme-surface-muted theme-border sticky top-0 z-10 flex items-center justify-between border-b px-6 py-4">
+          <h2 className="theme-text-primary text-lg font-semibold">{title}</h2>
           <button
-            className="rounded-full border border-[#1f1f24] bg-[#141417] px-4 py-2 text-sm text-slate-200"
+            className="theme-button-secondary rounded-full border px-4 py-2 text-sm"
             onClick={onClose}
             type="button"
           >
@@ -552,11 +552,11 @@ export function ProdutosAdmin() {
         <SearchBar value={search} onChange={setSearch} />
 
         <div className="flex items-center gap-2">
-          <Filter size={16} className="text-slate-400" />
+          <Filter size={16} className="theme-text-muted" />
           <select
             value={sortBy}
             onChange={(e) => handleSortChange(e.target.value)}
-            className="rounded-lg border border-slate-600 bg-slate-800 px-3 py-2 text-sm text-slate-200 focus:border-slate-500 focus:outline-none"
+            className="theme-input rounded-lg border px-3 py-2 text-sm focus:outline-none"
           >
             {SORT_OPTIONS.map((option) => (
               <option key={option.value} value={option.value}>
@@ -582,8 +582,8 @@ export function ProdutosAdmin() {
           />
 
           {/* Controles de paginação */}
-          <div className="flex items-center justify-between rounded-lg border border-slate-700/50 bg-slate-900/30 px-6 py-4">
-            <div className="text-sm text-slate-400">
+          <div className="theme-surface-muted theme-border flex items-center justify-between rounded-lg border px-6 py-4">
+            <div className="theme-text-muted text-sm">
               Página{" "}
               <span className="font-semibold">{pagination.currentPage}</span> de{" "}
               <span className="font-semibold">{pagination.pages}</span> (
@@ -595,7 +595,7 @@ export function ProdutosAdmin() {
               <button
                 onClick={handlePreviousPage}
                 disabled={!pagination.hasPrevious || isLoading}
-                className="inline-flex items-center gap-2 rounded-lg border border-slate-600 bg-slate-800 px-4 py-2 text-sm font-medium text-slate-200 transition-all disabled:cursor-not-allowed disabled:opacity-50 hover:enabled:border-slate-500 hover:enabled:bg-slate-700"
+                className="theme-button-secondary inline-flex items-center gap-2 rounded-lg border px-4 py-2 text-sm font-medium transition-all disabled:cursor-not-allowed disabled:opacity-50"
               >
                 <ChevronLeft size={16} />
                 Anterior
@@ -604,7 +604,7 @@ export function ProdutosAdmin() {
               <button
                 onClick={handleNextPage}
                 disabled={!pagination.hasNext || isLoading}
-                className="inline-flex items-center gap-2 rounded-lg border border-slate-600 bg-slate-800 px-4 py-2 text-sm font-medium text-slate-200 transition-all disabled:cursor-not-allowed disabled:opacity-50 hover:enabled:border-slate-500 hover:enabled:bg-slate-700"
+                className="theme-button-secondary inline-flex items-center gap-2 rounded-lg border px-4 py-2 text-sm font-medium transition-all disabled:cursor-not-allowed disabled:opacity-50"
               >
                 Próxima
                 <ChevronRight size={16} />
@@ -623,9 +623,9 @@ export function ProdutosAdmin() {
           }}
         >
           {detailLoading ? (
-            <div className="rounded-3xl border border-slate-800/70 bg-slate-900/40 p-8 text-slate-200">
-              Carregando detalhes do produto...
-            </div>
+              <div className="theme-surface rounded-3xl border p-8">
+                Carregando detalhes do produto...
+              </div>
           ) : detailError ? (
             <div className="rounded-3xl border border-red-500/40 bg-red-500/10 p-8 text-red-200">
               {detailError}
@@ -659,36 +659,36 @@ export function ProdutosAdmin() {
           }}
         >
           {editLoading ? (
-            <div className="rounded-3xl border border-slate-800/70 bg-slate-900/40 p-8 text-slate-200">
-              Carregando produto...
-            </div>
+              <div className="theme-surface rounded-3xl border p-8">
+                Carregando produto...
+              </div>
           ) : editForm ? (
             <form className="space-y-6" onSubmit={handleEditSubmit}>
               <div className="grid gap-4 md:grid-cols-2">
-                <label className="space-y-2 text-sm text-slate-300">
+                <label className="theme-text-primary space-y-2 text-sm">
                   <span>Nome do produto</span>
                   <input
-                    className="w-full rounded-xl border border-slate-700 bg-slate-950 px-4 py-3 text-slate-100"
+                    className="theme-input w-full rounded-xl border px-4 py-3"
                     value={editForm.nome_produto}
                     onChange={(event) => handleEditFieldChange("nome_produto", event.target.value)}
                     required
                   />
                 </label>
 
-                <label className="space-y-2 text-sm text-slate-300">
+                <label className="theme-text-primary space-y-2 text-sm">
                   <span>Categoria</span>
                   <input
-                    className="w-full rounded-xl border border-slate-700 bg-slate-950 px-4 py-3 text-slate-100"
+                    className="theme-input w-full rounded-xl border px-4 py-3"
                     value={editForm.categoria_produto}
                     onChange={(event) => handleEditFieldChange("categoria_produto", event.target.value)}
                     required
                   />
                 </label>
 
-                <label className="space-y-2 text-sm text-slate-300 md:col-span-2">
+                <label className="theme-text-primary space-y-2 text-sm md:col-span-2">
                   <span>Imagem do produto</span>
                   <input
-                    className="w-full rounded-xl border border-slate-700 bg-slate-950 px-4 py-3 text-slate-100 file:mr-4 file:rounded-full file:border-0 file:bg-[#e8c547] file:px-4 file:py-2 file:text-sm file:font-semibold file:text-[#0d0d0f]"
+                    className="theme-input w-full rounded-xl border px-4 py-3 file:mr-4 file:rounded-full file:border-0 file:bg-[color:var(--primary)] file:px-4 file:py-2 file:text-sm file:font-semibold file:text-[color:var(--primary-contrast)]"
                     type="file"
                     accept="image/*"
                     onChange={(event) => {
@@ -707,50 +707,50 @@ export function ProdutosAdmin() {
                   ) : null}
                 </label>
 
-                <label className="space-y-2 text-sm text-slate-300">
+                <label className="theme-text-primary space-y-2 text-sm">
                   <span>Preço (BRL)</span>
                   <input
-                    className="w-full rounded-xl border border-slate-700 bg-slate-950 px-4 py-3 text-slate-100"
+                    className="theme-input w-full rounded-xl border px-4 py-3"
                     value={editForm.preco}
                     onChange={(event) => handleEditFieldChange("preco", event.target.value)}
                     inputMode="decimal"
                   />
                 </label>
 
-                <label className="space-y-2 text-sm text-slate-300">
+                <label className="theme-text-primary space-y-2 text-sm">
                   <span>Peso (g)</span>
                   <input
-                    className="w-full rounded-xl border border-slate-700 bg-slate-950 px-4 py-3 text-slate-100"
+                    className="theme-input w-full rounded-xl border px-4 py-3"
                     value={editForm.peso_produto_gramas}
                     onChange={(event) => handleEditFieldChange("peso_produto_gramas", event.target.value)}
                     inputMode="decimal"
                   />
                 </label>
 
-                <label className="space-y-2 text-sm text-slate-300">
+                <label className="theme-text-primary space-y-2 text-sm">
                   <span>Comprimento (cm)</span>
                   <input
-                    className="w-full rounded-xl border border-slate-700 bg-slate-950 px-4 py-3 text-slate-100"
+                    className="theme-input w-full rounded-xl border px-4 py-3"
                     value={editForm.comprimento_centimetros}
                     onChange={(event) => handleEditFieldChange("comprimento_centimetros", event.target.value)}
                     inputMode="decimal"
                   />
                 </label>
 
-                <label className="space-y-2 text-sm text-slate-300">
+                <label className="theme-text-primary space-y-2 text-sm">
                   <span>Altura (cm)</span>
                   <input
-                    className="w-full rounded-xl border border-slate-700 bg-slate-950 px-4 py-3 text-slate-100"
+                    className="theme-input w-full rounded-xl border px-4 py-3"
                     value={editForm.altura_centimetros}
                     onChange={(event) => handleEditFieldChange("altura_centimetros", event.target.value)}
                     inputMode="decimal"
                   />
                 </label>
 
-                <label className="space-y-2 text-sm text-slate-300">
+                <label className="theme-text-primary space-y-2 text-sm">
                   <span>Largura (cm)</span>
                   <input
-                    className="w-full rounded-xl border border-slate-700 bg-slate-950 px-4 py-3 text-slate-100"
+                    className="theme-input w-full rounded-xl border px-4 py-3"
                     value={editForm.largura_centimetros}
                     onChange={(event) => handleEditFieldChange("largura_centimetros", event.target.value)}
                     inputMode="decimal"
@@ -771,14 +771,14 @@ export function ProdutosAdmin() {
               ) : null}
 
               {imageUploading === "edit" ? (
-                <div className="rounded-2xl border border-slate-700 bg-slate-900/40 p-4 text-sm text-slate-300">
+                <div className="theme-surface rounded-2xl border p-4 text-sm theme-text-muted">
                   Enviando imagem...
                 </div>
               ) : null}
 
               <div className="flex justify-end gap-3">
                 <button
-                  className="rounded-full border border-[#1f1f24] bg-[#141417] px-4 py-2 text-sm font-semibold text-slate-200"
+                  className="theme-button-secondary rounded-full border px-4 py-2 text-sm font-semibold"
                   onClick={() => {
                     setEditingProductId(null);
                     setEditForm(null);
@@ -789,7 +789,7 @@ export function ProdutosAdmin() {
                   Cancelar
                 </button>
                 <button
-                  className="rounded-full bg-[#e8c547] px-5 py-2 text-sm font-semibold text-[#0d0d0f] disabled:cursor-not-allowed disabled:opacity-60"
+                  className="theme-button-primary rounded-full px-5 py-2 text-sm font-semibold disabled:cursor-not-allowed disabled:opacity-60"
                   disabled={editSaving}
                   type="submit"
                 >
@@ -819,21 +819,21 @@ export function ProdutosAdmin() {
         >
           <form className="space-y-6" onSubmit={handleCreateSubmit}>
             <div className="grid gap-4 md:grid-cols-2">
-              <label className="space-y-2 text-sm text-slate-300">
+              <label className="theme-text-primary space-y-2 text-sm">
                 <span>Nome do produto</span>
                 <input
-                  className="w-full rounded-xl border border-slate-700 bg-slate-950 px-4 py-3 text-slate-100"
+                  className="theme-input w-full rounded-xl border px-4 py-3"
                   value={createForm.nome_produto}
                   onChange={(event) => handleCreateFieldChange("nome_produto", event.target.value)}
                   required
                 />
               </label>
 
-              <label className="space-y-2 text-sm text-slate-300">
+              <label className="theme-text-primary space-y-2 text-sm">
                 <span>Categoria</span>
                 <input
                   list="categoria-suggestions"
-                  className="w-full rounded-xl border border-slate-700 bg-slate-950 px-4 py-3 text-slate-100"
+                  className="theme-input w-full rounded-xl border px-4 py-3"
                   value={createForm.categoria_produto}
                   onChange={(event) => handleCreateFieldChange("categoria_produto", event.target.value)}
                   required
@@ -843,15 +843,15 @@ export function ProdutosAdmin() {
                     <option key={categoria} value={categoria} />
                   ))}
                 </datalist>
-                <p className="text-xs text-slate-500">
+                <p className="theme-text-muted text-xs">
                   Digite uma nova categoria ou escolha uma existente.
                 </p>
               </label>
 
-              <label className="space-y-2 text-sm text-slate-300 md:col-span-2">
+              <label className="theme-text-primary space-y-2 text-sm md:col-span-2">
                 <span>Imagem do produto</span>
                 <input
-                  className="w-full rounded-xl border border-slate-700 bg-slate-950 px-4 py-3 text-slate-100 file:mr-4 file:rounded-full file:border-0 file:bg-[#e8c547] file:px-4 file:py-2 file:text-sm file:font-semibold file:text-[#0d0d0f]"
+                  className="theme-input w-full rounded-xl border px-4 py-3 file:mr-4 file:rounded-full file:border-0 file:bg-[color:var(--primary)] file:px-4 file:py-2 file:text-sm file:font-semibold file:text-[color:var(--primary-contrast)]"
                   type="file"
                   accept="image/*"
                   onChange={(event) => {
@@ -870,10 +870,10 @@ export function ProdutosAdmin() {
                 ) : null}
               </label>
 
-              <label className="space-y-2 text-sm text-slate-300 md:col-span-2">
+              <label className="theme-text-primary space-y-2 text-sm md:col-span-2">
                 <span>Preço inicial</span>
                 <input
-                  className="w-full rounded-xl border border-slate-700 bg-slate-950 px-4 py-3 text-slate-100"
+                  className="theme-input w-full rounded-xl border px-4 py-3"
                   value={createForm.preco}
                   onChange={(event) => handleCreateFieldChange("preco", event.target.value)}
                   inputMode="decimal"
@@ -881,40 +881,40 @@ export function ProdutosAdmin() {
                 />
               </label>
 
-              <label className="space-y-2 text-sm text-slate-300">
+              <label className="theme-text-primary space-y-2 text-sm">
                 <span>Peso (g)</span>
                 <input
-                  className="w-full rounded-xl border border-slate-700 bg-slate-950 px-4 py-3 text-slate-100"
+                  className="theme-input w-full rounded-xl border px-4 py-3"
                   value={createForm.peso_produto_gramas}
                   onChange={(event) => handleCreateFieldChange("peso_produto_gramas", event.target.value)}
                   inputMode="decimal"
                 />
               </label>
 
-              <label className="space-y-2 text-sm text-slate-300">
+              <label className="theme-text-primary space-y-2 text-sm">
                 <span>Comprimento (cm)</span>
                 <input
-                  className="w-full rounded-xl border border-slate-700 bg-slate-950 px-4 py-3 text-slate-100"
+                  className="theme-input w-full rounded-xl border px-4 py-3"
                   value={createForm.comprimento_centimetros}
                   onChange={(event) => handleCreateFieldChange("comprimento_centimetros", event.target.value)}
                   inputMode="decimal"
                 />
               </label>
 
-              <label className="space-y-2 text-sm text-slate-300">
+              <label className="theme-text-primary space-y-2 text-sm">
                 <span>Altura (cm)</span>
                 <input
-                  className="w-full rounded-xl border border-slate-700 bg-slate-950 px-4 py-3 text-slate-100"
+                  className="theme-input w-full rounded-xl border px-4 py-3"
                   value={createForm.altura_centimetros}
                   onChange={(event) => handleCreateFieldChange("altura_centimetros", event.target.value)}
                   inputMode="decimal"
                 />
               </label>
 
-              <label className="space-y-2 text-sm text-slate-300">
+              <label className="theme-text-primary space-y-2 text-sm">
                 <span>Largura (cm)</span>
                 <input
-                  className="w-full rounded-xl border border-slate-700 bg-slate-950 px-4 py-3 text-slate-100"
+                  className="theme-input w-full rounded-xl border px-4 py-3"
                   value={createForm.largura_centimetros}
                   onChange={(event) => handleCreateFieldChange("largura_centimetros", event.target.value)}
                   inputMode="decimal"
@@ -935,14 +935,14 @@ export function ProdutosAdmin() {
             ) : null}
 
             {imageUploading === "create" ? (
-              <div className="rounded-2xl border border-slate-700 bg-slate-900/40 p-4 text-sm text-slate-300">
+              <div className="theme-surface rounded-2xl border p-4 text-sm theme-text-muted">
                 Enviando imagem...
               </div>
             ) : null}
 
             <div className="flex justify-end gap-3">
               <button
-                className="rounded-full border border-[#1f1f24] bg-[#141417] px-4 py-2 text-sm font-semibold text-slate-200"
+                className="theme-button-secondary rounded-full border px-4 py-2 text-sm font-semibold"
                 onClick={() => {
                   if (createSaving) {
                     return;
@@ -956,7 +956,7 @@ export function ProdutosAdmin() {
                 Cancelar
               </button>
               <button
-                className="rounded-full bg-[#e8c547] px-5 py-2 text-sm font-semibold text-[#0d0d0f] disabled:cursor-not-allowed disabled:opacity-60"
+                className="theme-button-primary rounded-full px-5 py-2 text-sm font-semibold disabled:cursor-not-allowed disabled:opacity-60"
                 disabled={createSaving}
                 type="submit"
               >

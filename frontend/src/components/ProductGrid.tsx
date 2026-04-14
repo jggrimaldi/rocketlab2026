@@ -19,16 +19,16 @@ export function ProductGrid({
   if (isLoading) {
     return (
       <div className="mt-8 space-y-4">
-        <div className="rounded-3xl border border-slate-800/70 bg-slate-900/40 p-4 text-sm text-slate-300">
+        <div className="theme-surface-muted rounded-3xl border p-4 text-sm">
           Carregando produtos...
         </div>
         <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 sm:gap-6 lg:grid-cols-3 xl:grid-cols-4">
           {Array.from({ length: 8 }, (_, index) => (
             <div
               key={index}
-              className="overflow-hidden rounded-2xl border border-slate-800/70 bg-slate-900/40 animate-pulse"
+              className="theme-surface-muted animate-pulse overflow-hidden rounded-2xl border"
             >
-              <div className="h-32 w-full bg-slate-800/60 sm:h-40 lg:h-52" />
+               <div className="h-32 w-full bg-slate-300/20 sm:h-40 lg:h-52" />
               <div className="space-y-3 p-4 sm:p-5">
                 <div className="h-3 w-24 rounded bg-slate-800/60" />
                 <div className="h-5 w-3/4 rounded bg-slate-700/60" />
@@ -45,17 +45,17 @@ export function ProductGrid({
 
   if (error) {
     return (
-      <div className="mt-8 rounded-3xl border border-red-500/40 bg-red-500/10 p-8 text-red-200">
-        {error}
-      </div>
+        <div className="mt-8 rounded-3xl border border-red-500/40 bg-red-500/10 p-8 text-red-200">
+          {error}
+        </div>
     )
   }
 
   if (produtos.length === 0) {
     return (
-      <div className="mt-8 rounded-3xl border border-slate-800/70 bg-slate-900/40 p-8 text-slate-200">
-        Carregando produtos...
-      </div>
+        <div className="theme-surface-muted mt-8 rounded-3xl border p-8">
+          Carregando produtos...
+        </div>
     )
   }
 
