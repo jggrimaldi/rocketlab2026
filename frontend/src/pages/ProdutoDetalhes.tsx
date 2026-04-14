@@ -15,6 +15,7 @@ type ProdutoDetalhesState = {
 
 export function ProdutoDetalhes() {
   const { id } = useParams()
+  const [categoryImages, setCategoryImages] = useState<Record<string, string>>({})
   const [state, setState] = useState<ProdutoDetalhesState>({
     produto: null,
     avaliacoes: null,
@@ -22,6 +23,20 @@ export function ProdutoDetalhes() {
   })
   const [isLoading, setIsLoading] = useState(true)
   const [error, setError] = useState<string | undefined>()
+
+  useEffect(() => {
+    const controller = new AbortController()
+
+    api.get<Record<string, string>>("/produtos/categorias/imagens", { signal: controller.signal })
+      .then((response) => {
+        setCategoryImages(response)
+      })
+      .catch(() => undefined)
+
+    return () => {
+      controller.abort()
+    }
+  }, [])
 
   useEffect(() => {
     if (!id) return
@@ -99,6 +114,7 @@ export function ProdutoDetalhes() {
           produto={produto}
           vendas={vendas}
           avaliacoes={avaliacoes}
+          imageUrl={categoryImages[produto.categoria_produto]}
           onEdit={() => undefined}
           onDelete={() => undefined}
         />

@@ -52,12 +52,7 @@ export function ProductRow({ produto, onEdit, onDelete, onView }: ProductRowProp
           </button>
           <button
             className="rounded-full border border-red-400/40 bg-red-500/10 p-2 text-red-300 transition hover:border-red-400/70"
-            onClick={() => {
-              const confirmed = window.confirm(
-                `Remover o produto "${produto.nome}"?`
-              )
-              if (confirmed) onDelete(produto)
-            }}
+            onClick={() => onDelete(produto)}
             type="button"
           >
             <Trash2 size={16} />

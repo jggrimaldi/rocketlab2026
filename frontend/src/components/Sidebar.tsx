@@ -1,21 +1,17 @@
 import { useState } from "react"
 import { NavLink } from "react-router-dom"
 import {
+  ChartColumn,
   LayoutGrid,
   Menu,
-  Package,
   Plus,
-  Store,
-  Users,
   X,
 } from "lucide-react"
 
 const navItems = [
+  { label: "Dashboard", icon: ChartColumn, path: "/dashboard" },
   { label: "Catalogo", icon: LayoutGrid, path: "/" },
   { label: "Produtos", icon: Plus, path: "/produtos" },
-  { label: "Vendedores", icon: Store, path: "/vendedores" },
-  { label: "Consumidores", icon: Users, path: "/consumidores" },
-  { label: "Pedidos", icon: Package, path: "/pedidos" },
 ]
 
 export default function Sidebar() {

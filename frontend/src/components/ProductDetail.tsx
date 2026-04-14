@@ -2,6 +2,7 @@ type Produto = {
   id_produto: string
   nome_produto: string
   categoria_produto: string
+  preco: number | null
   peso_produto_gramas: number | null
   comprimento_centimetros: number | null
   altura_centimetros: number | null
@@ -32,6 +33,7 @@ type ProductDetailProps = {
   produto: Produto
   vendas: Vendas
   avaliacoes: AvaliacoesSummary
+  imageUrl?: string
   onEdit: () => void
   onDelete: () => void
 }
@@ -61,12 +63,13 @@ export default function ProductDetail({
   produto,
   vendas,
   avaliacoes,
+  imageUrl,
   onEdit,
   onDelete,
 }: ProductDetailProps) {
   const averagePrice = vendas.total_vendas
     ? vendas.receita_total / vendas.total_vendas
-    : 0
+    : (produto.preco ?? 0)
   const categoria = produto.categoria_produto || "—"
   const initials = categoria
     .split("_")
@@ -78,10 +81,20 @@ export default function ProductDetail({
   return (
     <div className="space-y-10">
       <section className="grid gap-8 lg:grid-cols-[1.05fr_1.2fr]">
-        <div className="flex min-h-[280px] items-center justify-center rounded-3xl border border-[#1f1f24] bg-[#141417] text-slate-400">
-          <div className="flex h-24 w-24 items-center justify-center rounded-full border border-[#2a2a31] bg-[#0d0d0f] text-2xl font-semibold uppercase tracking-[0.3em] text-[#e8c547]">
-            {initials || "CT"}
-          </div>
+        <div className="flex min-h-[280px] items-center justify-center overflow-hidden rounded-3xl border border-[#1f1f24] bg-[#141417] text-slate-400">
+          {imageUrl ? (
+            <img
+              src={imageUrl}
+              alt={produto.nome_produto}
+              className="h-full min-h-[280px] w-full object-cover"
+              loading="lazy"
+              decoding="async"
+            />
+          ) : (
+            <div className="flex h-24 w-24 items-center justify-center rounded-full border border-[#2a2a31] bg-[#0d0d0f] text-2xl font-semibold uppercase tracking-[0.3em] text-[#e8c547]">
+              {initials || "CT"}
+            </div>
+          )}
         </div>
 
         <div className="space-y-6">

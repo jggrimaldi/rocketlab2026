@@ -1,12 +1,12 @@
-import type { Produto } from "../types/produto"
+import type { ProdutoListItem } from "../types/produto"
 import { ProductCard } from "./ProductCard"
 
 type ProductGridProps = {
-  produtos: Produto[]
+  produtos: ProdutoListItem[]
   isLoading: boolean
   error?: string
   categoryImages: Record<string, string>
-  pricesByProduct: Record<string, number>
+  onSelectProduct: (produto: ProdutoListItem) => void
 }
 
 export function ProductGrid({
@@ -14,12 +14,31 @@ export function ProductGrid({
   isLoading,
   error,
   categoryImages,
-  pricesByProduct,
+  onSelectProduct,
 }: ProductGridProps) {
   if (isLoading) {
     return (
-      <div className="mt-8 rounded-3xl border border-slate-800/70 bg-slate-900/40 p-8 text-slate-200">
-        Carregando produtos...
+      <div className="mt-8 space-y-4">
+        <div className="rounded-3xl border border-slate-800/70 bg-slate-900/40 p-4 text-sm text-slate-300">
+          Carregando produtos...
+        </div>
+        <div className="grid gap-6 sm:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4">
+          {Array.from({ length: 8 }, (_, index) => (
+            <div
+              key={index}
+              className="overflow-hidden rounded-2xl border border-slate-800/70 bg-slate-900/40 animate-pulse"
+            >
+              <div className="h-48 w-full bg-slate-800/60 sm:h-52" />
+              <div className="space-y-3 p-5">
+                <div className="h-3 w-24 rounded bg-slate-800/60" />
+                <div className="h-5 w-3/4 rounded bg-slate-700/60" />
+                <div className="h-4 w-1/2 rounded bg-slate-800/60" />
+                <div className="h-4 w-2/5 rounded bg-slate-800/60" />
+                <div className="h-4 w-3/5 rounded bg-slate-800/60" />
+              </div>
+            </div>
+          ))}
+        </div>
       </div>
     )
   }
@@ -35,7 +54,7 @@ export function ProductGrid({
   if (produtos.length === 0) {
     return (
       <div className="mt-8 rounded-3xl border border-slate-800/70 bg-slate-900/40 p-8 text-slate-200">
-        Nenhum produto encontrado.
+        Carregando produtos...
       </div>
     )
   }
@@ -47,7 +66,7 @@ export function ProductGrid({
           key={produto.id_produto}
           produto={produto}
           imageUrl={categoryImages[produto.categoria_produto]}
-          price={pricesByProduct[produto.id_produto]}
+          onSelect={onSelectProduct}
         />
       ))}
     </div>

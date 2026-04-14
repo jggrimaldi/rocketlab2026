@@ -1,4 +1,4 @@
-from sqlalchemy import String, Float, Integer, ForeignKey, PrimaryKeyConstraint
+from sqlalchemy import Float, ForeignKey, Integer, PrimaryKeyConstraint, String
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 
 from app.database import Base
@@ -12,10 +12,10 @@ class ItemPedido(Base):
     )
     id_item: Mapped[int] = mapped_column(Integer, nullable=False)
     id_produto: Mapped[str] = mapped_column(
-        String(32), ForeignKey("produtos.id_produto"), nullable=False
+        String(32), ForeignKey("produtos.id_produto"), nullable=False, index=True
     )
     id_vendedor: Mapped[str] = mapped_column(
-        String(32), ForeignKey("vendedores.id_vendedor"), nullable=False
+        String(32), ForeignKey("vendedores.id_vendedor"), nullable=False, index=True
     )
     preco_BRL: Mapped[float] = mapped_column(Float)
     preco_frete: Mapped[float] = mapped_column(Float)

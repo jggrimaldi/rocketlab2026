@@ -1,9 +1,16 @@
 type ProductsToolbarProps = {
   search: string
   onSearchChange: (value: string) => void
+  total: number
+  isSearching: boolean
 }
 
-export function ProductsToolbar({ search, onSearchChange }: ProductsToolbarProps) {
+export function ProductsToolbar({
+  search,
+  onSearchChange,
+  total,
+  isSearching,
+}: ProductsToolbarProps) {
   return (
     <div className="flex flex-wrap items-center justify-between gap-4">
       <div className="flex flex-wrap items-center gap-3">
@@ -13,12 +20,9 @@ export function ProductsToolbar({ search, onSearchChange }: ProductsToolbarProps
           value={search}
           onChange={(event) => onSearchChange(event.target.value)}
         />
-        <button className="h-11 rounded-full border border-[#1f1f24] bg-[#141417] px-4 text-sm text-slate-200">
-          Ordenar
-        </button>
       </div>
       <p className="text-xs uppercase tracking-[0.3em] text-slate-500">
-        Produtos ativos
+        {isSearching ? "Buscando..." : `${total} produtos`}
       </p>
     </div>
   )
